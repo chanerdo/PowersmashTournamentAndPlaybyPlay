@@ -1,0 +1,13 @@
+C:\Users\cha\Documents\Visual Studio 2015\Projects\PowersmashTournamentAndPlaybyPlay\PowersmashTournamentAndPlaybyPlay\bin\Debug\PowersmashTournamentAndPlaybyPlay.exe.config
+C:\Users\cha\Documents\Visual Studio 2015\Projects\PowersmashTournamentAndPlaybyPlay\PowersmashTournamentAndPlaybyPlay\bin\Debug\PowersmashTournamentAndPlaybyPlay.exe
+C:\Users\cha\Documents\Visual Studio 2015\Projects\PowersmashTournamentAndPlaybyPlay\PowersmashTournamentAndPlaybyPlay\bin\Debug\PowersmashTournamentAndPlaybyPlay.pdb
+C:\Users\cha\Documents\Visual Studio 2015\Projects\PowersmashTournamentAndPlaybyPlay\PowersmashTournamentAndPlaybyPlay\bin\Debug\MySql.Data.dll
+C:\Users\cha\Documents\Visual Studio 2015\Projects\PowersmashTournamentAndPlaybyPlay\PowersmashTournamentAndPlaybyPlay\bin\Debug\MySql.Data.Entity.dll
+C:\Users\cha\Documents\Visual Studio 2015\Projects\PowersmashTournamentAndPlaybyPlay\PowersmashTournamentAndPlaybyPlay\bin\Debug\System.Net.Http.dll
+C:\Users\cha\Documents\Visual Studio 2015\Projects\PowersmashTournamentAndPlaybyPlay\PowersmashTournamentAndPlaybyPlay\obj\Debug\PowersmashTournamentAndPlaybyPlay.frmMain.resources
+C:\Users\cha\Documents\Visual Studio 2015\Projects\PowersmashTournamentAndPlaybyPlay\PowersmashTournamentAndPlaybyPlay\obj\Debug\PowersmashTournamentAndPlaybyPlay.frmPlaybyPlay.resources
+C:\Users\cha\Documents\Visual Studio 2015\Projects\PowersmashTournamentAndPlaybyPlay\PowersmashTournamentAndPlaybyPlay\obj\Debug\PowersmashTournamentAndPlaybyPlay.Properties.Resources.resources
+C:\Users\cha\Documents\Visual Studio 2015\Projects\PowersmashTournamentAndPlaybyPlay\PowersmashTournamentAndPlaybyPlay\obj\Debug\PowersmashTournamentAndPlaybyPlay.csproj.GenerateResource.Cache
+C:\Users\cha\Documents\Visual Studio 2015\Projects\PowersmashTournamentAndPlaybyPlay\PowersmashTournamentAndPlaybyPlay\obj\Debug\PowersmashTournamentAndPlaybyPlay.exe
+C:\Users\cha\Documents\Visual Studio 2015\Projects\PowersmashTournamentAndPlaybyPlay\PowersmashTournamentAndPlaybyPlay\obj\Debug\PowersmashTournamentAndPlaybyPlay.pdb
+C:\Users\cha\Documents\Visual Studio 2015\Projects\PowersmashTournamentAndPlaybyPlay\PowersmashTournamentAndPlaybyPlay\obj\Debug\PowersmashTournamentAndPlaybyPlay.csprojResolveAssemblyReference.cache
