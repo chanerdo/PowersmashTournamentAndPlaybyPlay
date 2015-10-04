@@ -15,11 +15,12 @@ namespace PowersmashTournamentAndPlaybyPlay
     public partial class frmMain : Form
     {
 
-        private MySqlConnection connDB = new MySqlConnection("datasource=unicsoftworks.com;port=3306;username=admin;password=powersmash123;");
+        private MySqlConnection connDB = new MySqlConnection("datasource=unicsoftworks.com;port=3306;username=admin;password=powersmash123;Convert Zero Datetime=true;");
         private DataTable tournament_data;
         private DataTable user_data;
         private DataTable reservation_data;
-        private int player_single, player_double, player_mix, user1, user2;
+        private DataTable team_data;
+        private DataTable user_group_data;
         private int sp1, sp2, dp1, dp2, dp3, dp4, mp1, mp2, mp3, mp4;
 
         public frmMain()
@@ -32,58 +33,49 @@ namespace PowersmashTournamentAndPlaybyPlay
             getTournamentData();
             getUserData();
             getReservationData();
-            foreach (DataRow row in tournament_data.Rows)
+            getTeamData();
+            getUserGroupData();
+            
+            foreach (DataRow tour_row in tournament_data.Rows)
             {
-                cbxTournamentName.Items.Add(row.Field<string>(1));
+                cbxTournamentName.Items.Add(tour_row.Field<string>(1));
             }
-            dgvSinglePlayer.DataSource = user_data;
-            dgvDoublePlayer.DataSource = user_data;
-            dgvMixPlayer.DataSource = user_data;
+            foreach (DataRow reserve_row in reservation_data.Rows)
+            {
+                if (reserve_row.Field<int>(8) == 3)
+                {
+                    cbxCourtTour.Items.Add(reserve_row.Field<int>(2));
+                }
+            }
+            foreach (DataRow team_row in team_data.Rows)
+            {
+                cbxSingleTeam1.Items.Add(team_row.Field<string>(1));
+                cbxSingleTeam2.Items.Add(team_row.Field<string>(1));
+                cbxDoubleTeam1.Items.Add(team_row.Field<string>(1));
+                cbxDoubleTeam2.Items.Add(team_row.Field<string>(1));
+                cbxMixTeam1.Items.Add(team_row.Field<string>(1));
+                cbxMixTeam2.Items.Add(team_row.Field<string>(1));
+            }
         }
 
         private void frmMain_Shown(object sender, EventArgs e)
         {
-            cbxTournamentName.SelectedIndex = 0;
-            cbxMatchType.SelectedIndex = 0;
-            cbxSearchBySingleTour.SelectedIndex = 0;
-            cbxSearchByDoubleTour.SelectedIndex = 0;
-            cbxSearchByMixTour.SelectedIndex = 0;
-            pbxSinglePlayer1_Click(this.pbxSinglePlayer1, e);
-            pbxDoublePlayer1_Click(this.pbxDoublePlayer1, e);
-            pbxMixPlayer1_Click(this.pbxMixPlayer1, e);
-            for (int i = 0; i < dgvSinglePlayer.Columns.Count; i++)
+            if(tournament_data.Rows.Count != 0)
             {
-                dgvSinglePlayer.Columns[i].Visible = false;
-                dgvMixPlayer.Columns[i].Visible = false;
-                dgvDoublePlayer.Columns[i].Visible = false;
+                cbxTournamentName.SelectedIndex = 0;
             }
-            dgvSinglePlayer.Columns["id"].Visible = true;
-            dgvSinglePlayer.Columns["team"].Visible = true;
-            dgvSinglePlayer.Columns["email"].Visible = true;
-            dgvSinglePlayer.Columns["firstname"].Visible = true;
-            dgvSinglePlayer.Columns["lastname"].Visible = true;
-            dgvSinglePlayer.Columns["gender"].Visible = true;
-            dgvSinglePlayer.Columns["birthday"].Visible = true;
-            dgvSinglePlayer.Columns["contact"].Visible = true;
-            dgvSinglePlayer.Columns["address"].Visible = true;
-            dgvDoublePlayer.Columns["id"].Visible = true;
-            dgvDoublePlayer.Columns["team"].Visible = true;
-            dgvDoublePlayer.Columns["email"].Visible = true;
-            dgvDoublePlayer.Columns["firstname"].Visible = true;
-            dgvDoublePlayer.Columns["lastname"].Visible = true;
-            dgvDoublePlayer.Columns["gender"].Visible = true;
-            dgvDoublePlayer.Columns["birthday"].Visible = true;
-            dgvDoublePlayer.Columns["contact"].Visible = true;
-            dgvDoublePlayer.Columns["address"].Visible = true;
-            dgvMixPlayer.Columns["id"].Visible = true;
-            dgvMixPlayer.Columns["team"].Visible = true;
-            dgvMixPlayer.Columns["email"].Visible = true;
-            dgvMixPlayer.Columns["firstname"].Visible = true;
-            dgvMixPlayer.Columns["lastname"].Visible = true;
-            dgvMixPlayer.Columns["gender"].Visible = true;
-            dgvMixPlayer.Columns["birthday"].Visible = true;
-            dgvMixPlayer.Columns["contact"].Visible = true;
-            dgvMixPlayer.Columns["address"].Visible = true;
+            if (reservation_data.Rows.Count != 0)
+            {
+                cbxCourtTour.SelectedIndex = 0;
+            }
+            cbxMatchType.SelectedIndex = 0;
+            cbxGender.SelectedIndex = 0;
+            cbxSingleTeam1.SelectedIndex = 0;
+            cbxSingleTeam2.SelectedIndex = 0;
+            cbxDoubleTeam1.SelectedIndex = 0;
+            cbxDoubleTeam2.SelectedIndex = 0;
+            cbxMixTeam1.SelectedIndex = 0;
+            cbxMixTeam2.SelectedIndex = 0;
         }
 
         private void getTournamentData()
@@ -92,7 +84,7 @@ namespace PowersmashTournamentAndPlaybyPlay
             {
                 if (connDB.State == ConnectionState.Open) { connDB.Close(); }
                 connDB.Open();
-                MySqlCommand cmdDB = new MySqlCommand("SELECT * FROM powersmash.Tournament", connDB);
+                MySqlCommand cmdDB = new MySqlCommand("SELECT * FROM powersmash.tournament", connDB);
                 MySqlDataAdapter sqlDataAdapter = new MySqlDataAdapter(cmdDB);
                 tournament_data = new DataTable();
                 sqlDataAdapter.Fill(tournament_data);
@@ -149,20 +141,61 @@ namespace PowersmashTournamentAndPlaybyPlay
             }
         }
 
-        private void refreshDataGrid()
+        private void getTeamData()
         {
-            if(cbxMatchType.SelectedIndex == 0)
+            try
             {
-                foreach (DataRow row in user_data.Rows)
-                {
-                    if (user1 != null || user2 != null)
-                    {
-                        if(row.Field<int>(0) == user1)
-                        {
-                            
-                        }
-                    }
-                }
+                if (connDB.State == ConnectionState.Open) { connDB.Close(); }
+                connDB.Open();
+                MySqlCommand cmdDB = new MySqlCommand("SELECT * FROM powersmash.team", connDB);
+                MySqlDataAdapter sqlDataAdapter = new MySqlDataAdapter(cmdDB);
+                team_data = new DataTable();
+                sqlDataAdapter.Fill(team_data);
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connDB.Close();
+            }
+        }
+
+        private void getUserGroupData()
+        {
+            try
+            {
+                if (connDB.State == ConnectionState.Open) { connDB.Close(); }
+                connDB.Open();
+                MySqlCommand cmdDB = new MySqlCommand("SELECT * FROM powersmash.fos_user_user_group", connDB);
+                MySqlDataAdapter sqlDataAdapter = new MySqlDataAdapter(cmdDB);
+                user_group_data = new DataTable();
+                sqlDataAdapter.Fill(user_group_data);
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connDB.Close();
+            }
+        }
+
+        private void saveData(string query)
+        {
+            try
+            {
+                if (connDB.State == ConnectionState.Open) { connDB.Close(); }
+                connDB.Open();
+                MySqlCommand cmdDB = new MySqlCommand(query, connDB);
+                cmdDB.ExecuteNonQuery();
+            }
+            catch (MySqlException ex) { MessageBox.Show(ex.Message); }
+            finally
+            {
+                connDB.Close();
             }
         }
 
@@ -188,247 +221,629 @@ namespace PowersmashTournamentAndPlaybyPlay
             }
         }
 
-        private void dgvMixPlayer_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void cbxGender_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (e.RowIndex >= 0)
+            /*for (int i = 0; i < dgvSinglePlayer.RowCount; i++)
             {
-                DataGridViewRow dgvrow = dgvMixPlayer.Rows[e.RowIndex];
-                int rowcount = 0;
-                byte[] image = null;
-                foreach (DataRow row in user_data.Rows)
+                dgvSinglePlayer.Rows[i].Visible = true ;
+            }
+            dgvSinglePlayer.Invalidate();
+
+            if (cbxMatchType.SelectedIndex == 0)
+            {
+                for (int i = 0; i < dgvSinglePlayer.RowCount; i++)
                 {
-                    if (row.Field<int>(0) == int.Parse(dgvrow.Cells[0].Value.ToString()))
+                    if (cbxGender.SelectedIndex == 0)
                     {
-                        if (user_data.Rows[rowcount][42].ToString().Equals(""))
+                        if (!dgvSinglePlayer.Rows[i].Cells["gender"].Value.ToString().Equals("m"))
                         {
-                            if (player_mix == 1) { pbxMixPlayer1.Image = Properties.Resources.profile; }
-                            if (player_mix == 2) { pbxMixPlayer2.Image = Properties.Resources.profile; }
-                            if (player_mix == 3) { pbxMixPlayer3.Image = Properties.Resources.profile; }
-                            if (player_mix == 4) { pbxMixPlayer4.Image = Properties.Resources.profile; }
+                            dgvSinglePlayer.CurrentCell = null;
+                            dgvSinglePlayer.Rows[i].Visible = false;
+                            dgvSinglePlayer.Invalidate();
                         }
-                        else
+                    }
+                    if (cbxGender.SelectedIndex == 1)
+                    {
+                        if (!dgvSinglePlayer.Rows[i].Cells["gender"].Value.ToString().Equals("f"))
                         {
-                            image = (byte[])(user_data.Rows[rowcount][42]);
-                            if (player_mix == 1)
+                            dgvSinglePlayer.CurrentCell = null;
+                            dgvSinglePlayer.Rows[i].Visible = false;
+                            dgvSinglePlayer.Invalidate();
+                        }
+                    }
+                }
+            }*/
+        }
+
+        private void cbxMixTeam1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbxPlayerMixName1.Items.Count != 0)
+            {
+                for (int i = 0; i < cbxPlayerDoubleName1.Items.Count; i++)
+                {
+                    cbxPlayerMixName1.Items.RemoveAt(i);
+                    cbxPlayerMixName2.Items.RemoveAt(i);
+                }
+                foreach (DataRow team_row in team_data.Rows)
+                {
+                    if (team_row.Field<string>(1).Equals(cbxMixTeam1.Text))
+                    {
+                        foreach (DataRow usergroup_row in user_group_data.Rows)
+                        {
+                            if (usergroup_row.Field<int>(1) == team_row.Field<int>(0))
                             {
-                                MemoryStream memstream = new MemoryStream(image);
-                                pbxMixPlayer1.Image = Image.FromStream(memstream);
-                                mp1 = row.Field<int>(0);
-                            }
-                            if (player_mix == 2)
-                            {
-                                MemoryStream memstream = new MemoryStream(image);
-                                pbxMixPlayer2.Image = Image.FromStream(memstream);
-                                mp2 = row.Field<int>(0);
-                            }
-                            if (player_mix == 3)
-                            {
-                                MemoryStream memstream = new MemoryStream(image);
-                                pbxMixPlayer2.Image = Image.FromStream(memstream);
-                                mp3 = row.Field<int>(0);
-                            }
-                            if (player_mix == 4)
-                            {
-                                MemoryStream memstream = new MemoryStream(image);
-                                pbxMixPlayer4.Image = Image.FromStream(memstream);
-                                mp4 = row.Field<int>(0);
+                                foreach (DataRow user_row in user_data.Rows)
+                                {
+                                    if (user_row.Field<int>(0) == usergroup_row.Field<int>(0))
+                                    {
+                                        string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                                        cbxPlayerMixName1.Items.Add(name);
+                                        cbxPlayerMixName2.Items.Add(name);
+                                    }
+                                }
                             }
                         }
                     }
-                    rowcount++;
+                }
+            }
+            else
+            {
+                foreach (DataRow team_row in team_data.Rows)
+                {
+                    if (team_row.Field<string>(1).Equals(cbxMixTeam1.Text))
+                    {
+                        foreach (DataRow usergroup_row in user_group_data.Rows)
+                        {
+                            if (usergroup_row.Field<int>(1) == team_row.Field<int>(0))
+                            {
+                                foreach (DataRow user_row in user_data.Rows)
+                                {
+                                    if (user_row.Field<int>(0) == usergroup_row.Field<int>(0))
+                                    {
+                                        string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                                        cbxPlayerMixName1.Items.Add(name);
+                                        cbxPlayerMixName2.Items.Add(name);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            cbxPlayerMixName1.SelectedIndex = 0;
+            cbxPlayerMixName2.SelectedIndex = 0;
+        }
+
+        private void cbxMixTeam2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbxPlayerMixName3.Items.Count != 0)
+            {
+                for (int i = 0; i < cbxPlayerMixName3.Items.Count; i++)
+                {
+                    cbxPlayerMixName3.Items.RemoveAt(i);
+                    cbxPlayerMixName4.Items.RemoveAt(i);
+                }
+                foreach (DataRow team_row in team_data.Rows)
+                {
+                    if (team_row.Field<string>(1).Equals(cbxMixTeam2.Text))
+                    {
+                        foreach (DataRow usergroup_row in user_group_data.Rows)
+                        {
+                            if (usergroup_row.Field<int>(1) == team_row.Field<int>(0))
+                            {
+                                foreach (DataRow user_row in user_data.Rows)
+                                {
+                                    if (user_row.Field<int>(0) == usergroup_row.Field<int>(0))
+                                    {
+                                        string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                                        cbxPlayerMixName3.Items.Add(name);
+                                        cbxPlayerMixName4.Items.Add(name);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (DataRow team_row in team_data.Rows)
+                {
+                    if (team_row.Field<string>(1).Equals(cbxMixTeam2.Text))
+                    {
+                        foreach (DataRow usergroup_row in user_group_data.Rows)
+                        {
+                            if (usergroup_row.Field<int>(1) == team_row.Field<int>(0))
+                            {
+                                foreach (DataRow user_row in user_data.Rows)
+                                {
+                                    if (user_row.Field<int>(0) == usergroup_row.Field<int>(0))
+                                    {
+                                        string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                                        cbxPlayerMixName3.Items.Add(name);
+                                        cbxPlayerMixName4.Items.Add(name);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            cbxPlayerMixName3.SelectedIndex = 0;
+            cbxPlayerMixName4.SelectedIndex = 0;
+        }
+
+        private void cbxPlayerMixName1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            byte[] image;
+            foreach (DataRow user_row in user_data.Rows)
+            {
+                string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                if (name.Equals(cbxPlayerMixName1.Text))
+                {
+                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    else
+                    {
+                        image = (byte[])(user_row.Field<byte[]>(42));
+                        MemoryStream memstream = new MemoryStream(image);
+                        pbxMixPlayer1.Image = Image.FromStream(memstream);
+                        mp1 = user_row.Field<int>(0);
+                    }
+                }
+            }
+        }
+
+        private void cbxPlayerMixName2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            byte[] image;
+            foreach (DataRow user_row in user_data.Rows)
+            {
+                string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                if (name.Equals(cbxPlayerMixName2.Text))
+                {
+                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    else
+                    {
+                        image = (byte[])(user_row.Field<byte[]>(42));
+                        MemoryStream memstream = new MemoryStream(image);
+                        pbxMixPlayer2.Image = Image.FromStream(memstream);
+                        mp2 = user_row.Field<int>(0);
+                    }
+                }
+            }
+        }
+
+        private void cbxPlayerMixName3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            byte[] image;
+            foreach (DataRow user_row in user_data.Rows)
+            {
+                string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                if (name.Equals(cbxPlayerMixName3.Text))
+                {
+                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    else
+                    {
+                        image = (byte[])(user_row.Field<byte[]>(42));
+                        MemoryStream memstream = new MemoryStream(image);
+                        pbxMixPlayer3.Image = Image.FromStream(memstream);
+                        mp3 = user_row.Field<int>(0);
+                    }
+                }
+            }
+        }
+
+        private void cbxPlayerMixName4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            byte[] image;
+            foreach (DataRow user_row in user_data.Rows)
+            {
+                string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                if (name.Equals(cbxPlayerMixName4.Text))
+                {
+                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    else
+                    {
+                        image = (byte[])(user_row.Field<byte[]>(42));
+                        MemoryStream memstream = new MemoryStream(image);
+                        pbxMixPlayer4.Image = Image.FromStream(memstream);
+                        mp4 = user_row.Field<int>(0);
+                    }
                 }
             }
         }
 
         private void btnMixDone_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void pbxMixPlayer1_Click(object sender, EventArgs e)
-        {
-            pnlMixPlayer1.BackColor = Color.Black;
-            pnlMixPlayer2.BackColor = Color.White;
-            pnlMixPlayer3.BackColor = Color.White;
-            pnlMixPlayer4.BackColor = Color.White;
-            player_mix = 1;
-        }
-
-        private void pbxMixPlayer2_Click(object sender, EventArgs e)
-        {
-            pnlMixPlayer2.BackColor = Color.Black;
-            pnlMixPlayer1.BackColor = Color.White;
-            pnlMixPlayer3.BackColor = Color.White;
-            pnlMixPlayer4.BackColor = Color.White;
-            player_mix = 2;
-        }
-
-        private void pbxMixPlayer3_Click(object sender, EventArgs e)
-        {
-            pnlMixPlayer3.BackColor = Color.Black;
-            pnlMixPlayer1.BackColor = Color.White;
-            pnlMixPlayer2.BackColor = Color.White;
-            pnlMixPlayer4.BackColor = Color.White;
-            player_mix = 3;
-        }
-
-        private void pbxMixPlayer4_Click(object sender, EventArgs e)
-        {
-            pnlMixPlayer4.BackColor = Color.Black;
-            pnlMixPlayer1.BackColor = Color.White;
-            pnlMixPlayer2.BackColor = Color.White;
-            pnlMixPlayer3.BackColor = Color.White;
-            player_mix = 4;
-        }
-
-        private void dgvDoublePlayer_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
+            if (MessageBox.Show("Are you done?", "Done", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                DataGridViewRow dgvrow = dgvDoublePlayer.Rows[e.RowIndex];
-                int rowcount = 0;
-                byte[] image = null;
-                foreach (DataRow row in user_data.Rows)
+                string matchgame = "INSERT INTO powersmash.match (player_1_1, player_1_2, player_2_1, player_2_2, tournament_id, court_id, type) VALUES((SELECT id FROM powersmash.user WHERE id = '" + mp1 +
+                                   "'), (SELECT id FROM powersmash.user WHERE id = '" + mp2 + "'), (SELECT id FROM powersmash.user WHERE id = '" + mp3 + "'), (SELECT id FROM powersmash.user WHERE id = '" + mp4 +
+                                   "'), (SELECT id FROM powersmash.tournament WHERE name = '" + cbxTournamentName.Text + "'), '" + cbxCourtTour.Text + "', 'Mixed')";
+                saveData(matchgame);
+
+                frmPlaybyPlay play = new frmPlaybyPlay(cbxTournamentName.Text, cbxMixTeam1.Text, cbxMixTeam2.Text, cbxPlayerMixName1.Text, cbxPlayerMixName2.Text, cbxPlayerMixName3.Text, cbxPlayerMixName4.Text, 3, mp1, mp2, mp3, mp4);
+                play.Show();
+                this.Hide();
+            }
+        }
+
+        private void cbxDoubleTeam1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbxPlayerDoubleName1.Items.Count != 0)
+            {
+                for (int i = 0; i < cbxPlayerDoubleName1.Items.Count; i++)
                 {
-                    if (row.Field<int>(0) == int.Parse(dgvrow.Cells[0].Value.ToString()))
+                    cbxPlayerDoubleName1.Items.RemoveAt(i);
+                    cbxPlayerDoubleName2.Items.RemoveAt(i);
+                }
+                foreach (DataRow team_row in team_data.Rows)
+                {
+                    if (team_row.Field<string>(1).Equals(cbxDoubleTeam1.Text))
                     {
-                        if (user_data.Rows[rowcount][42].ToString().Equals(""))
+                        foreach (DataRow usergroup_row in user_group_data.Rows)
                         {
-                            if (player_double == 1) { pbxDoublePlayer1.Image = Properties.Resources.profile; }
-                            if (player_double == 2) { pbxDoublePlayer2.Image = Properties.Resources.profile; }
-                            if (player_double == 3) { pbxDoublePlayer3.Image = Properties.Resources.profile; }
-                            if (player_double == 4) { pbxDoublePlayer4.Image = Properties.Resources.profile; }
-                        }
-                        else
-                        {
-                            image = (byte[])(user_data.Rows[rowcount][42]);
-                            if (player_double == 1)
+                            if (usergroup_row.Field<int>(1) == team_row.Field<int>(0))
                             {
-                                MemoryStream memstream = new MemoryStream(image);
-                                pbxDoublePlayer1.Image = Image.FromStream(memstream);
-                                dp1 = row.Field<int>(0);
-                            }
-                            if (player_double == 2)
-                            {
-                                MemoryStream memstream = new MemoryStream(image);
-                                pbxDoublePlayer2.Image = Image.FromStream(memstream);
-                                dp2 = row.Field<int>(0);
-                            }
-                            if (player_double == 3)
-                            {
-                                MemoryStream memstream = new MemoryStream(image);
-                                pbxDoublePlayer3.Image = Image.FromStream(memstream);
-                                dp3 = row.Field<int>(0);
-                            }
-                            if (player_double == 4)
-                            {
-                                MemoryStream memstream = new MemoryStream(image);
-                                pbxDoublePlayer4.Image = Image.FromStream(memstream);
-                                dp4 = row.Field<int>(0);
+                                foreach (DataRow user_row in user_data.Rows)
+                                {
+                                    if (user_row.Field<int>(0) == usergroup_row.Field<int>(0))
+                                    {
+                                        string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                                        cbxPlayerDoubleName1.Items.Add(name);
+                                        cbxPlayerDoubleName2.Items.Add(name);
+                                    }
+                                }
                             }
                         }
                     }
-                    rowcount++;
+                }
+            }
+            else
+            {
+                foreach (DataRow team_row in team_data.Rows)
+                {
+                    if (team_row.Field<string>(1).Equals(cbxDoubleTeam1.Text))
+                    {
+                        foreach (DataRow usergroup_row in user_group_data.Rows)
+                        {
+                            if (usergroup_row.Field<int>(1) == team_row.Field<int>(0))
+                            {
+                                foreach (DataRow user_row in user_data.Rows)
+                                {
+                                    if (user_row.Field<int>(0) == usergroup_row.Field<int>(0))
+                                    {
+                                        string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                                        cbxPlayerDoubleName1.Items.Add(name);
+                                        cbxPlayerDoubleName2.Items.Add(name);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            cbxPlayerDoubleName1.SelectedIndex = 0;
+            cbxPlayerDoubleName2.SelectedIndex = 0;
+        }
+
+        private void cbxDoubleTeam2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbxPlayerDoubleName3.Items.Count != 0)
+            {
+                for (int i = 0; i < cbxPlayerDoubleName3.Items.Count; i++)
+                {
+                    cbxPlayerDoubleName3.Items.RemoveAt(i);
+                    cbxPlayerDoubleName4.Items.RemoveAt(i);
+                }
+                foreach (DataRow team_row in team_data.Rows)
+                {
+                    if (team_row.Field<string>(1).Equals(cbxDoubleTeam2.Text))
+                    {
+                        foreach (DataRow usergroup_row in user_group_data.Rows)
+                        {
+                            if (usergroup_row.Field<int>(1) == team_row.Field<int>(0))
+                            {
+                                foreach (DataRow user_row in user_data.Rows)
+                                {
+                                    if (user_row.Field<int>(0) == usergroup_row.Field<int>(0))
+                                    {
+                                        string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                                        cbxPlayerDoubleName3.Items.Add(name);
+                                        cbxPlayerDoubleName4.Items.Add(name);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (DataRow team_row in team_data.Rows)
+                {
+                    if (team_row.Field<string>(1).Equals(cbxDoubleTeam2.Text))
+                    {
+                        foreach (DataRow usergroup_row in user_group_data.Rows)
+                        {
+                            if (usergroup_row.Field<int>(1) == team_row.Field<int>(0))
+                            {
+                                foreach (DataRow user_row in user_data.Rows)
+                                {
+                                    if (user_row.Field<int>(0) == usergroup_row.Field<int>(0))
+                                    {
+                                        string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                                        cbxPlayerDoubleName3.Items.Add(name);
+                                        cbxPlayerDoubleName4.Items.Add(name);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            cbxPlayerDoubleName3.SelectedIndex = 0;
+            cbxPlayerDoubleName4.SelectedIndex = 0;
+        }
+
+        private void cbxDoublePlayerName1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            byte[] image;
+            foreach (DataRow user_row in user_data.Rows)
+            {
+                string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                if (name.Equals(cbxPlayerDoubleName1.Text))
+                {
+                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    else
+                    {
+                        image = (byte[])(user_row.Field<byte[]>(42));
+                        MemoryStream memstream = new MemoryStream(image);
+                        pbxDoublePlayer1.Image = Image.FromStream(memstream);
+                        dp1 = user_row.Field<int>(0);
+                    }
+                }
+            }
+        }
+
+        private void cbxDoublePlayerName2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            byte[] image;
+            foreach (DataRow user_row in user_data.Rows)
+            {
+                string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                if (name.Equals(cbxPlayerDoubleName2.Text))
+                {
+                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    else
+                    {
+                        image = (byte[])(user_row.Field<byte[]>(42));
+                        MemoryStream memstream = new MemoryStream(image);
+                        pbxDoublePlayer2.Image = Image.FromStream(memstream);
+                        dp2 = user_row.Field<int>(0);
+                    }
+                }
+            }
+        }
+
+        private void cbxDoublePlayerName3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            byte[] image;
+            foreach (DataRow user_row in user_data.Rows)
+            {
+                string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                if (name.Equals(cbxPlayerDoubleName3.Text))
+                {
+                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    else
+                    {
+                        image = (byte[])(user_row.Field<byte[]>(42));
+                        MemoryStream memstream = new MemoryStream(image);
+                        pbxDoublePlayer3.Image = Image.FromStream(memstream);
+                        dp3 = user_row.Field<int>(0);
+                    }
+                }
+            }
+        }
+
+        private void cbxDoublePlayerName4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            byte[] image;
+            foreach (DataRow user_row in user_data.Rows)
+            {
+                string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                if (name.Equals(cbxPlayerDoubleName4.Text))
+                {
+                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    else
+                    {
+                        image = (byte[])(user_row.Field<byte[]>(42));
+                        MemoryStream memstream = new MemoryStream(image);
+                        pbxDoublePlayer4.Image = Image.FromStream(memstream);
+                        dp4 = user_row.Field<int>(0);
+                    }
                 }
             }
         }
 
         private void btnDoubleDone_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void pbxDoublePlayer1_Click(object sender, EventArgs e)
-        {
-            pnlDoublePlayer1.BackColor = Color.Black;
-            pnlDoublePlayer2.BackColor = Color.White;
-            pnlDoublePlayer3.BackColor = Color.White;
-            pnlDoublePlayer4.BackColor = Color.White;
-            player_double = 1;
-        }
-
-        private void pbxDoublePlayer2_Click(object sender, EventArgs e)
-        {
-            pnlDoublePlayer2.BackColor = Color.Black;
-            pnlDoublePlayer1.BackColor = Color.White;
-            pnlDoublePlayer3.BackColor = Color.White;
-            pnlDoublePlayer4.BackColor = Color.White;
-            player_double = 2;
-        }
-
-        private void pbxDoublePlayer3_Click(object sender, EventArgs e)
-        {
-            pnlDoublePlayer3.BackColor = Color.Black;
-            pnlDoublePlayer1.BackColor = Color.White;
-            pnlDoublePlayer2.BackColor = Color.White;
-            pnlDoublePlayer4.BackColor = Color.White;
-            player_double = 3;
-        }
-
-        private void pbxDoublePlayer4_Click(object sender, EventArgs e)
-        {
-            pnlDoublePlayer4.BackColor = Color.Black;
-            pnlDoublePlayer1.BackColor = Color.White;
-            pnlDoublePlayer2.BackColor = Color.White;
-            pnlDoublePlayer3.BackColor = Color.White;
-            player_double = 4;
-        }
-
-        private void pbxSinglePlayer1_Click(object sender, EventArgs e)
-        {
-            pnlSinglePlayer1.BackColor = Color.Black;
-            pnlSinglePlayer2.BackColor = Color.White;
-            player_single = 1;
-        }
-
-        private void pbxSinglePlayer2_Click(object sender, EventArgs e)
-        {
-            pnlSinglePlayer2.BackColor = Color.Black;
-            pnlSinglePlayer1.BackColor = Color.White;
-            player_single = 2;
-        }
-
-        private void dgvSinglePlayer_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
+            if (MessageBox.Show("Are you done?", "Done", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                DataGridViewRow dgvrow = dgvSinglePlayer.Rows[e.RowIndex];
-                int rowcount = 0;
-                byte[] image = null;
-                foreach (DataRow row in user_data.Rows)
+                string matchgame = "INSERT INTO powersmash.match (player_1_1, player_1_2, player_2_1, player_2_2, tournament_id, court_id, type) VALUES((SELECT id FROM powersmash.user WHERE id = '" + dp1 +
+                                   "'), (SELECT id FROM powersmash.user WHERE id = '" + dp2 + "'), (SELECT id FROM powersmash.user WHERE id = '" + dp3 + "'), (SELECT id FROM powersmash.user WHERE id = '" + dp4 + 
+                                   "'), (SELECT id FROM powersmash.tournament WHERE name = '" + cbxTournamentName.Text + "'), '" + cbxCourtTour.Text + "', 'Doubles')";
+                saveData(matchgame);
+
+                frmPlaybyPlay play = new frmPlaybyPlay(cbxTournamentName.Text, cbxDoubleTeam1.Text, cbxDoubleTeam2.Text, cbxPlayerDoubleName1.Text, cbxPlayerDoubleName2.Text, cbxPlayerDoubleName3.Text, cbxPlayerDoubleName4.Text, 2, dp1, dp2, dp3, dp4);
+                play.Show();
+                this.Hide();
+            }
+        }
+
+        private void cbxSingleTeam1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbxPlayerSingleName1.Items.Count != 0)
+            {
+                for (int i = 0; i < cbxPlayerSingleName1.Items.Count; i++)
                 {
-                    if (row.Field<int>(0) == int.Parse(dgvrow.Cells[0].Value.ToString()))
+                    cbxPlayerSingleName1.Items.RemoveAt(i);
+                }
+                foreach (DataRow team_row in team_data.Rows)
+                {
+                    if (team_row.Field<string>(1).Equals(cbxSingleTeam1.Text))
                     {
-                        if(user_data.Rows[rowcount][42].ToString().Equals(""))
+                        foreach (DataRow usergroup_row in user_group_data.Rows)
                         {
-                            if (player_single == 1) { pbxSinglePlayer1.Image = Properties.Resources.profile; }
-                            if (player_single == 2) { pbxSinglePlayer2.Image = Properties.Resources.profile; }
-                        }
-                        else
-                        {
-                            image = (byte[])(user_data.Rows[rowcount][42]);
-                            if (player_single == 1)
+                            if (usergroup_row.Field<int>(1) == team_row.Field<int>(0))
                             {
-                                MemoryStream memstream = new MemoryStream(image);
-                                pbxSinglePlayer1.Image = Image.FromStream(memstream);
-                                sp1 = row.Field<int>(0);
-                            }
-                            if (player_single == 2)
-                            {
-                                MemoryStream memstream = new MemoryStream(image);
-                                pbxSinglePlayer2.Image = Image.FromStream(memstream);
-                                sp2 = row.Field<int>(0);
+                                foreach (DataRow user_row in user_data.Rows)
+                                {
+                                    if (user_row.Field<int>(0) == usergroup_row.Field<int>(0))
+                                    {
+                                        string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                                        cbxPlayerSingleName1.Items.Add(name);
+                                    }
+                                }
                             }
                         }
                     }
-                    rowcount++;
+                }
+            }
+            else
+            {
+                foreach (DataRow team_row in team_data.Rows)
+                {
+                    if (team_row.Field<string>(1).Equals(cbxSingleTeam1.Text))
+                    {
+                        foreach (DataRow usergroup_row in user_group_data.Rows)
+                        {
+                            if (usergroup_row.Field<int>(1) == team_row.Field<int>(0))
+                            {
+                                foreach (DataRow user_row in user_data.Rows)
+                                {
+                                    if (user_row.Field<int>(0) == usergroup_row.Field<int>(0))
+                                    {
+                                        string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                                        cbxPlayerSingleName1.Items.Add(name);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            cbxPlayerSingleName1.SelectedIndex = 0;
+        }
+
+        private void cbxSingleTeam2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbxPlayerSingleName1.Items.Count != 0)
+            {
+                for (int i = 0; i < cbxPlayerSingleName2.Items.Count; i++)
+                {
+                    cbxPlayerSingleName2.Items.RemoveAt(i);
+                }
+                foreach (DataRow team_row in team_data.Rows)
+                {
+                    if (team_row.Field<string>(1).Equals(cbxSingleTeam2.Text))
+                    {
+                        foreach (DataRow usergroup_row in user_group_data.Rows)
+                        {
+                            if (usergroup_row.Field<int>(1) == team_row.Field<int>(0))
+                            {
+                                foreach (DataRow user_row in user_data.Rows)
+                                {
+                                    if (user_row.Field<int>(0) == usergroup_row.Field<int>(0))
+                                    {
+                                        string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                                        cbxPlayerSingleName2.Items.Add(name);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (DataRow team_row in team_data.Rows)
+                {
+                    if (team_row.Field<string>(1).Equals(cbxSingleTeam2.Text))
+                    {
+                        foreach (DataRow usergroup_row in user_group_data.Rows)
+                        {
+                            if (usergroup_row.Field<int>(1) == team_row.Field<int>(0))
+                            {
+                                foreach (DataRow user_row in user_data.Rows)
+                                {
+                                    if (user_row.Field<int>(0) == usergroup_row.Field<int>(0))
+                                    {
+                                        string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                                        cbxPlayerSingleName2.Items.Add(name);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            cbxPlayerSingleName2.SelectedIndex = 0;
+        }
+
+        private void cbxPlayerSingleName1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            byte[] image;
+            foreach (DataRow user_row in user_data.Rows)
+            {
+                string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                if (name.Equals(cbxPlayerSingleName1.Text))
+                {
+                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    else
+                    {
+                        image = (byte[])(user_row.Field<byte[]>(42));
+                        MemoryStream memstream = new MemoryStream(image);
+                        pbxSinglePlayer1.Image = Image.FromStream(memstream);
+                        sp1 = user_row.Field<int>(0);
+                    }
+                }
+            }
+        }
+
+        private void cbxPlayerSingleName2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            byte[] image;
+            foreach (DataRow user_row in user_data.Rows)
+            {
+                string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
+                if (name.Equals(cbxPlayerSingleName2.Text))
+                {
+                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    else
+                    {
+                        image = (byte[])(user_row.Field<byte[]>(42));
+                        MemoryStream memstream = new MemoryStream(image);
+                        pbxSinglePlayer2.Image = Image.FromStream(memstream);
+                        sp2 = user_row.Field<int>(0);
+                    }
                 }
             }
         }
 
         private void btnSingleDone_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("Are you done?", "Done", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                string matchgame = "INSERT INTO powersmash.match (player_1_1, player_1_2, tournament_id, court_id, type) VALUES((SELECT id FROM powersmash.user WHERE id = '" + sp1 +
+                                   "'), (SELECT id FROM powersmash.user WHERE id = '" + sp2 + "'), (SELECT id FROM powersmash.tournament WHERE name = '" + cbxTournamentName.Text +
+                                   "'), '" + cbxCourtTour.Text + "', 'Singles')";
+                saveData(matchgame);
 
+                frmPlaybyPlay play = new frmPlaybyPlay(cbxTournamentName.Text, cbxSingleTeam1.Text, cbxSingleTeam2.Text, cbxPlayerSingleName1.Text, cbxPlayerSingleName2.Text, "", "", 1, sp1, sp2, 0, 0);
+                play.Show();
+                this.Hide();
+            }
         }
     }
 }

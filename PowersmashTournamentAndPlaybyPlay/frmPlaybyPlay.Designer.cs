@@ -43,13 +43,6 @@
             this.lblScore2 = new System.Windows.Forms.Label();
             this.tableLayoutPanel41 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.pnlSingle = new System.Windows.Forms.Panel();
-            this.lblSPlayer1 = new System.Windows.Forms.Label();
-            this.pbxSPlayer1 = new System.Windows.Forms.PictureBox();
-            this.lblSPlayer2 = new System.Windows.Forms.Label();
-            this.pbxSPlayer2 = new System.Windows.Forms.PictureBox();
-            this.pbxSCourt = new System.Windows.Forms.PictureBox();
-            this.lblSMatchType = new System.Windows.Forms.Label();
             this.pnlMixDouble = new System.Windows.Forms.Panel();
             this.lblMDPlayer4 = new System.Windows.Forms.Label();
             this.pbxMDPlayer4 = new System.Windows.Forms.PictureBox();
@@ -61,6 +54,13 @@
             this.pbxMDPlayer3 = new System.Windows.Forms.PictureBox();
             this.lblMDMatchType = new System.Windows.Forms.Label();
             this.pbxMDCourt = new System.Windows.Forms.PictureBox();
+            this.pnlSingle = new System.Windows.Forms.Panel();
+            this.lblSPlayer1 = new System.Windows.Forms.Label();
+            this.pbxSPlayer1 = new System.Windows.Forms.PictureBox();
+            this.lblSPlayer2 = new System.Windows.Forms.Label();
+            this.pbxSPlayer2 = new System.Windows.Forms.PictureBox();
+            this.pbxSCourt = new System.Windows.Forms.PictureBox();
+            this.lblSMatchType = new System.Windows.Forms.Label();
             this.tableLayoutPanel42 = new System.Windows.Forms.TableLayoutPanel();
             this.btnChangeCourt = new System.Windows.Forms.Button();
             this.btnFinishGame = new System.Windows.Forms.Button();
@@ -72,16 +72,16 @@
             this.tableLayoutPanel40.SuspendLayout();
             this.tableLayoutPanel41.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.pnlSingle.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbxSPlayer1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbxSPlayer2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbxSCourt)).BeginInit();
             this.pnlMixDouble.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMDPlayer4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMDPlayer2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMDPlayer1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMDPlayer3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMDCourt)).BeginInit();
+            this.pnlSingle.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxSPlayer1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxSPlayer2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxSCourt)).BeginInit();
             this.tableLayoutPanel42.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -286,88 +286,6 @@
             this.panel2.Size = new System.Drawing.Size(1131, 394);
             this.panel2.TabIndex = 0;
             // 
-            // pnlSingle
-            // 
-            this.pnlSingle.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pnlSingle.Controls.Add(this.lblSPlayer1);
-            this.pnlSingle.Controls.Add(this.pbxSPlayer1);
-            this.pnlSingle.Controls.Add(this.lblSPlayer2);
-            this.pnlSingle.Controls.Add(this.pbxSPlayer2);
-            this.pnlSingle.Controls.Add(this.pbxSCourt);
-            this.pnlSingle.Controls.Add(this.lblSMatchType);
-            this.pnlSingle.Location = new System.Drawing.Point(1, 3);
-            this.pnlSingle.Name = "pnlSingle";
-            this.pnlSingle.Size = new System.Drawing.Size(1127, 391);
-            this.pnlSingle.TabIndex = 53;
-            // 
-            // lblSPlayer1
-            // 
-            this.lblSPlayer1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblSPlayer1.AutoSize = true;
-            this.lblSPlayer1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSPlayer1.Location = new System.Drawing.Point(76, 231);
-            this.lblSPlayer1.Name = "lblSPlayer1";
-            this.lblSPlayer1.Size = new System.Drawing.Size(99, 21);
-            this.lblSPlayer1.TabIndex = 34;
-            this.lblSPlayer1.Text = "Player Name";
-            this.lblSPlayer1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // pbxSPlayer1
-            // 
-            this.pbxSPlayer1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pbxSPlayer1.Image = ((System.Drawing.Image)(resources.GetObject("pbxSPlayer1.Image")));
-            this.pbxSPlayer1.Location = new System.Drawing.Point(55, 110);
-            this.pbxSPlayer1.Name = "pbxSPlayer1";
-            this.pbxSPlayer1.Size = new System.Drawing.Size(142, 118);
-            this.pbxSPlayer1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbxSPlayer1.TabIndex = 31;
-            this.pbxSPlayer1.TabStop = false;
-            // 
-            // lblSPlayer2
-            // 
-            this.lblSPlayer2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblSPlayer2.AutoSize = true;
-            this.lblSPlayer2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSPlayer2.Location = new System.Drawing.Point(946, 231);
-            this.lblSPlayer2.Name = "lblSPlayer2";
-            this.lblSPlayer2.Size = new System.Drawing.Size(99, 21);
-            this.lblSPlayer2.TabIndex = 36;
-            this.lblSPlayer2.Text = "Player Name";
-            this.lblSPlayer2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // pbxSPlayer2
-            // 
-            this.pbxSPlayer2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pbxSPlayer2.Image = ((System.Drawing.Image)(resources.GetObject("pbxSPlayer2.Image")));
-            this.pbxSPlayer2.Location = new System.Drawing.Point(927, 110);
-            this.pbxSPlayer2.Name = "pbxSPlayer2";
-            this.pbxSPlayer2.Size = new System.Drawing.Size(142, 118);
-            this.pbxSPlayer2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbxSPlayer2.TabIndex = 30;
-            this.pbxSPlayer2.TabStop = false;
-            // 
-            // pbxSCourt
-            // 
-            this.pbxSCourt.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pbxSCourt.Image = global::PowersmashTournamentAndPlaybyPlay.Properties.Resources.court;
-            this.pbxSCourt.Location = new System.Drawing.Point(232, 16);
-            this.pbxSCourt.Name = "pbxSCourt";
-            this.pbxSCourt.Size = new System.Drawing.Size(655, 318);
-            this.pbxSCourt.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbxSCourt.TabIndex = 28;
-            this.pbxSCourt.TabStop = false;
-            // 
-            // lblSMatchType
-            // 
-            this.lblSMatchType.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblSMatchType.AutoSize = true;
-            this.lblSMatchType.Font = new System.Drawing.Font("Segoe UI Semibold", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSMatchType.Location = new System.Drawing.Point(497, 337);
-            this.lblSMatchType.Name = "lblSMatchType";
-            this.lblSMatchType.Size = new System.Drawing.Size(160, 37);
-            this.lblSMatchType.TabIndex = 29;
-            this.lblSMatchType.Text = "Match Type";
-            // 
             // pnlMixDouble
             // 
             this.pnlMixDouble.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -499,6 +417,94 @@
             this.pbxMDCourt.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbxMDCourt.TabIndex = 28;
             this.pbxMDCourt.TabStop = false;
+            this.pbxMDCourt.Paint += new System.Windows.Forms.PaintEventHandler(this.pbxMDCourt_Paint);
+            this.pbxMDCourt.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbxMDCourt_MouseClick);
+            // 
+            // pnlSingle
+            // 
+            this.pnlSingle.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pnlSingle.Controls.Add(this.lblSPlayer1);
+            this.pnlSingle.Controls.Add(this.pbxSPlayer1);
+            this.pnlSingle.Controls.Add(this.lblSPlayer2);
+            this.pnlSingle.Controls.Add(this.pbxSPlayer2);
+            this.pnlSingle.Controls.Add(this.pbxSCourt);
+            this.pnlSingle.Controls.Add(this.lblSMatchType);
+            this.pnlSingle.Location = new System.Drawing.Point(1, 3);
+            this.pnlSingle.Name = "pnlSingle";
+            this.pnlSingle.Size = new System.Drawing.Size(1127, 391);
+            this.pnlSingle.TabIndex = 53;
+            // 
+            // lblSPlayer1
+            // 
+            this.lblSPlayer1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblSPlayer1.AutoSize = true;
+            this.lblSPlayer1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSPlayer1.Location = new System.Drawing.Point(76, 231);
+            this.lblSPlayer1.Name = "lblSPlayer1";
+            this.lblSPlayer1.Size = new System.Drawing.Size(99, 21);
+            this.lblSPlayer1.TabIndex = 34;
+            this.lblSPlayer1.Text = "Player Name";
+            this.lblSPlayer1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pbxSPlayer1
+            // 
+            this.pbxSPlayer1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pbxSPlayer1.Image = ((System.Drawing.Image)(resources.GetObject("pbxSPlayer1.Image")));
+            this.pbxSPlayer1.Location = new System.Drawing.Point(55, 110);
+            this.pbxSPlayer1.Name = "pbxSPlayer1";
+            this.pbxSPlayer1.Size = new System.Drawing.Size(142, 118);
+            this.pbxSPlayer1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbxSPlayer1.TabIndex = 31;
+            this.pbxSPlayer1.TabStop = false;
+            this.pbxSPlayer1.Click += new System.EventHandler(this.pbxSPlayer1_Click);
+            // 
+            // lblSPlayer2
+            // 
+            this.lblSPlayer2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblSPlayer2.AutoSize = true;
+            this.lblSPlayer2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSPlayer2.Location = new System.Drawing.Point(946, 231);
+            this.lblSPlayer2.Name = "lblSPlayer2";
+            this.lblSPlayer2.Size = new System.Drawing.Size(99, 21);
+            this.lblSPlayer2.TabIndex = 36;
+            this.lblSPlayer2.Text = "Player Name";
+            this.lblSPlayer2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pbxSPlayer2
+            // 
+            this.pbxSPlayer2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pbxSPlayer2.Image = ((System.Drawing.Image)(resources.GetObject("pbxSPlayer2.Image")));
+            this.pbxSPlayer2.Location = new System.Drawing.Point(927, 110);
+            this.pbxSPlayer2.Name = "pbxSPlayer2";
+            this.pbxSPlayer2.Size = new System.Drawing.Size(142, 118);
+            this.pbxSPlayer2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbxSPlayer2.TabIndex = 30;
+            this.pbxSPlayer2.TabStop = false;
+            this.pbxSPlayer2.Click += new System.EventHandler(this.pbxSPlayer2_Click);
+            // 
+            // pbxSCourt
+            // 
+            this.pbxSCourt.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pbxSCourt.Image = global::PowersmashTournamentAndPlaybyPlay.Properties.Resources.court;
+            this.pbxSCourt.Location = new System.Drawing.Point(232, 16);
+            this.pbxSCourt.Name = "pbxSCourt";
+            this.pbxSCourt.Size = new System.Drawing.Size(655, 318);
+            this.pbxSCourt.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbxSCourt.TabIndex = 28;
+            this.pbxSCourt.TabStop = false;
+            this.pbxSCourt.Paint += new System.Windows.Forms.PaintEventHandler(this.pbxSCourt_Paint);
+            this.pbxSCourt.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbxSCourt_MouseClick);
+            // 
+            // lblSMatchType
+            // 
+            this.lblSMatchType.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblSMatchType.AutoSize = true;
+            this.lblSMatchType.Font = new System.Drawing.Font("Segoe UI Semibold", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSMatchType.Location = new System.Drawing.Point(497, 337);
+            this.lblSMatchType.Name = "lblSMatchType";
+            this.lblSMatchType.Size = new System.Drawing.Size(160, 37);
+            this.lblSMatchType.TabIndex = 29;
+            this.lblSMatchType.Text = "Match Type";
             // 
             // tableLayoutPanel42
             // 
@@ -552,6 +558,8 @@
             this.Name = "frmPlaybyPlay";
             this.Text = "frmPlaybyPlay";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.frmPlaybyPlay_Load);
+            this.Shown += new System.EventHandler(this.frmPlaybyPlay_Shown);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel38.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbxLogo1)).EndInit();
@@ -562,11 +570,6 @@
             this.tableLayoutPanel40.PerformLayout();
             this.tableLayoutPanel41.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            this.pnlSingle.ResumeLayout(false);
-            this.pnlSingle.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbxSPlayer1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbxSPlayer2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbxSCourt)).EndInit();
             this.pnlMixDouble.ResumeLayout(false);
             this.pnlMixDouble.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMDPlayer4)).EndInit();
@@ -574,6 +577,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbxMDPlayer1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMDPlayer3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxMDCourt)).EndInit();
+            this.pnlSingle.ResumeLayout(false);
+            this.pnlSingle.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxSPlayer1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxSPlayer2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxSCourt)).EndInit();
             this.tableLayoutPanel42.ResumeLayout(false);
             this.ResumeLayout(false);
 
