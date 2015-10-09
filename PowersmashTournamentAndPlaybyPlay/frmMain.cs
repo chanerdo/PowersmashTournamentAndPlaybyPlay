@@ -42,7 +42,7 @@ namespace PowersmashTournamentAndPlaybyPlay
             }
             foreach (DataRow reserve_row in reservation_data.Rows)
             {
-                if (reserve_row.Field<int>(8) == 3)
+                if (reserve_row.Field<int>(9) == 3)
                 {
                     cbxCourtTour.Items.Add(reserve_row.Field<int>(2));
                 }
@@ -376,12 +376,16 @@ namespace PowersmashTournamentAndPlaybyPlay
         private void cbxPlayerMixName1_SelectedIndexChanged(object sender, EventArgs e)
         {
             byte[] image;
+            int rowcount = 0;
             foreach (DataRow user_row in user_data.Rows)
             {
                 string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
                 if (name.Equals(cbxPlayerMixName1.Text))
                 {
-                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    if (user_data.Rows[rowcount][42].ToString().Equals(""))
+                    {
+                        mp1 = user_row.Field<int>(0);
+                    }
                     else
                     {
                         image = (byte[])(user_row.Field<byte[]>(42));
@@ -390,18 +394,23 @@ namespace PowersmashTournamentAndPlaybyPlay
                         mp1 = user_row.Field<int>(0);
                     }
                 }
+                rowcount++;
             }
         }
 
         private void cbxPlayerMixName2_SelectedIndexChanged(object sender, EventArgs e)
         {
             byte[] image;
+            int rowcount = 0;
             foreach (DataRow user_row in user_data.Rows)
             {
                 string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
                 if (name.Equals(cbxPlayerMixName2.Text))
                 {
-                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    if (user_data.Rows[rowcount][42].ToString().Equals(""))
+                    {
+                        mp2 = user_row.Field<int>(0);
+                    }
                     else
                     {
                         image = (byte[])(user_row.Field<byte[]>(42));
@@ -410,18 +419,23 @@ namespace PowersmashTournamentAndPlaybyPlay
                         mp2 = user_row.Field<int>(0);
                     }
                 }
+                rowcount++;
             }
         }
 
         private void cbxPlayerMixName3_SelectedIndexChanged(object sender, EventArgs e)
         {
             byte[] image;
+            int rowcount = 0;
             foreach (DataRow user_row in user_data.Rows)
             {
                 string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
                 if (name.Equals(cbxPlayerMixName3.Text))
                 {
-                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    if (user_data.Rows[rowcount][42].ToString().Equals(""))
+                    {
+                        mp3 = user_row.Field<int>(0);
+                    }
                     else
                     {
                         image = (byte[])(user_row.Field<byte[]>(42));
@@ -430,18 +444,23 @@ namespace PowersmashTournamentAndPlaybyPlay
                         mp3 = user_row.Field<int>(0);
                     }
                 }
+                rowcount++;
             }
         }
 
         private void cbxPlayerMixName4_SelectedIndexChanged(object sender, EventArgs e)
         {
             byte[] image;
+            int rowcount = 0;
             foreach (DataRow user_row in user_data.Rows)
             {
                 string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
                 if (name.Equals(cbxPlayerMixName4.Text))
                 {
-                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    if (user_data.Rows[rowcount][42].ToString().Equals(""))
+                    {
+                        mp4 = user_row.Field<int>(0);
+                    }
                     else
                     {
                         image = (byte[])(user_row.Field<byte[]>(42));
@@ -450,6 +469,7 @@ namespace PowersmashTournamentAndPlaybyPlay
                         mp4 = user_row.Field<int>(0);
                     }
                 }
+                rowcount++;
             }
         }
 
@@ -457,7 +477,7 @@ namespace PowersmashTournamentAndPlaybyPlay
         {
             if (MessageBox.Show("Are you done?", "Done", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                string matchgame = "INSERT INTO powersmash.match (player_1_1, player_1_2, player_2_1, player_2_2, tournament_id, court_id, type) VALUES((SELECT id FROM powersmash.user WHERE id = '" + mp1 +
+                string matchgame = "INSERT INTO powersmash.match (player11, player12, player21, player22, tournament_id, court_id, type) VALUES((SELECT id FROM powersmash.user WHERE id = '" + mp1 +
                                    "'), (SELECT id FROM powersmash.user WHERE id = '" + mp2 + "'), (SELECT id FROM powersmash.user WHERE id = '" + mp3 + "'), (SELECT id FROM powersmash.user WHERE id = '" + mp4 +
                                    "'), (SELECT id FROM powersmash.tournament WHERE name = '" + cbxTournamentName.Text + "'), '" + cbxCourtTour.Text + "', 'Mixed')";
                 saveData(matchgame);
@@ -589,12 +609,16 @@ namespace PowersmashTournamentAndPlaybyPlay
         private void cbxDoublePlayerName1_SelectedIndexChanged(object sender, EventArgs e)
         {
             byte[] image;
+            int rowcount = 0;
             foreach (DataRow user_row in user_data.Rows)
             {
                 string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
                 if (name.Equals(cbxPlayerDoubleName1.Text))
                 {
-                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    if (user_data.Rows[rowcount][42].ToString().Equals(""))
+                    {
+                        dp1 = user_row.Field<int>(0);
+                    }
                     else
                     {
                         image = (byte[])(user_row.Field<byte[]>(42));
@@ -603,18 +627,23 @@ namespace PowersmashTournamentAndPlaybyPlay
                         dp1 = user_row.Field<int>(0);
                     }
                 }
+                rowcount++;
             }
         }
 
         private void cbxDoublePlayerName2_SelectedIndexChanged(object sender, EventArgs e)
         {
             byte[] image;
+            int rowcount = 0;
             foreach (DataRow user_row in user_data.Rows)
             {
                 string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
                 if (name.Equals(cbxPlayerDoubleName2.Text))
                 {
-                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    if (user_data.Rows[rowcount][42].ToString().Equals(""))
+                    {
+                        dp2 = user_row.Field<int>(0);
+                    }
                     else
                     {
                         image = (byte[])(user_row.Field<byte[]>(42));
@@ -623,18 +652,23 @@ namespace PowersmashTournamentAndPlaybyPlay
                         dp2 = user_row.Field<int>(0);
                     }
                 }
+                rowcount++;
             }
         }
 
         private void cbxDoublePlayerName3_SelectedIndexChanged(object sender, EventArgs e)
         {
             byte[] image;
+            int rowcount = 0;
             foreach (DataRow user_row in user_data.Rows)
             {
                 string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
                 if (name.Equals(cbxPlayerDoubleName3.Text))
                 {
-                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    if (user_data.Rows[rowcount][42].ToString().Equals(""))
+                    {
+                        dp3 = user_row.Field<int>(0);
+                    }
                     else
                     {
                         image = (byte[])(user_row.Field<byte[]>(42));
@@ -643,18 +677,23 @@ namespace PowersmashTournamentAndPlaybyPlay
                         dp3 = user_row.Field<int>(0);
                     }
                 }
+                rowcount++;
             }
         }
 
         private void cbxDoublePlayerName4_SelectedIndexChanged(object sender, EventArgs e)
         {
             byte[] image;
+            int rowcount = 0;
             foreach (DataRow user_row in user_data.Rows)
             {
                 string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
                 if (name.Equals(cbxPlayerDoubleName4.Text))
                 {
-                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    if (user_data.Rows[rowcount][42].ToString().Equals(""))
+                    {
+                        dp4 = user_row.Field<int>(0);
+                    }
                     else
                     {
                         image = (byte[])(user_row.Field<byte[]>(42));
@@ -663,6 +702,7 @@ namespace PowersmashTournamentAndPlaybyPlay
                         dp4 = user_row.Field<int>(0);
                     }
                 }
+                rowcount++;
             }
         }
 
@@ -670,7 +710,7 @@ namespace PowersmashTournamentAndPlaybyPlay
         {
             if (MessageBox.Show("Are you done?", "Done", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                string matchgame = "INSERT INTO powersmash.match (player_1_1, player_1_2, player_2_1, player_2_2, tournament_id, court_id, type) VALUES((SELECT id FROM powersmash.user WHERE id = '" + dp1 +
+                string matchgame = "INSERT INTO powersmash.match (player11, player12, player21, player22, tournament_id, court_id, type) VALUES((SELECT id FROM powersmash.user WHERE id = '" + dp1 +
                                    "'), (SELECT id FROM powersmash.user WHERE id = '" + dp2 + "'), (SELECT id FROM powersmash.user WHERE id = '" + dp3 + "'), (SELECT id FROM powersmash.user WHERE id = '" + dp4 + 
                                    "'), (SELECT id FROM powersmash.tournament WHERE name = '" + cbxTournamentName.Text + "'), '" + cbxCourtTour.Text + "', 'Doubles')";
                 saveData(matchgame);
@@ -794,12 +834,13 @@ namespace PowersmashTournamentAndPlaybyPlay
         private void cbxPlayerSingleName1_SelectedIndexChanged(object sender, EventArgs e)
         {
             byte[] image;
+            int rowcount = 0;
             foreach (DataRow user_row in user_data.Rows)
             {
                 string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
                 if (name.Equals(cbxPlayerSingleName1.Text))
                 {
-                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    if (user_data.Rows[rowcount][42].ToString().Equals("")) { sp1 = user_row.Field<int>(0); }
                     else
                     {
                         image = (byte[])(user_row.Field<byte[]>(42));
@@ -808,18 +849,20 @@ namespace PowersmashTournamentAndPlaybyPlay
                         sp1 = user_row.Field<int>(0);
                     }
                 }
+                rowcount++;
             }
         }
 
         private void cbxPlayerSingleName2_SelectedIndexChanged(object sender, EventArgs e)
         {
             byte[] image;
+            int rowcount = 0;
             foreach (DataRow user_row in user_data.Rows)
             {
                 string name = user_row.Field<string>(21) + " " + user_row.Field<string>(22);
                 if (name.Equals(cbxPlayerSingleName2.Text))
                 {
-                    if (user_row.Field<byte[]>(42).ToString().Equals("")) { }
+                    if (user_data.Rows[rowcount][42].ToString().Equals("")) { sp2 = user_row.Field<int>(0); }
                     else
                     {
                         image = (byte[])(user_row.Field<byte[]>(42));
@@ -828,6 +871,7 @@ namespace PowersmashTournamentAndPlaybyPlay
                         sp2 = user_row.Field<int>(0);
                     }
                 }
+                rowcount++;
             }
         }
 
@@ -835,7 +879,8 @@ namespace PowersmashTournamentAndPlaybyPlay
         {
             if (MessageBox.Show("Are you done?", "Done", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                string matchgame = "INSERT INTO powersmash.match (player_1_1, player_1_2, tournament_id, court_id, type) VALUES((SELECT id FROM powersmash.user WHERE id = '" + sp1 +
+                MessageBox.Show(sp1.ToString() + "\n" + sp2.ToString());
+                string matchgame = "INSERT INTO powersmash.match (player11, player21, tournament_id, court_id, type) VALUES((SELECT id FROM powersmash.user WHERE id = '" + sp1 +
                                    "'), (SELECT id FROM powersmash.user WHERE id = '" + sp2 + "'), (SELECT id FROM powersmash.tournament WHERE name = '" + cbxTournamentName.Text +
                                    "'), '" + cbxCourtTour.Text + "', 'Singles')";
                 saveData(matchgame);

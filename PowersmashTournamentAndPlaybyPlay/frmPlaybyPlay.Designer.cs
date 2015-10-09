@@ -64,6 +64,7 @@
             this.tableLayoutPanel42 = new System.Windows.Forms.TableLayoutPanel();
             this.btnChangeCourt = new System.Windows.Forms.Button();
             this.btnFinishGame = new System.Windows.Forms.Button();
+            this.cbxAttackType = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel38.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxLogo1)).BeginInit();
@@ -278,8 +279,8 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.pnlSingle);
             this.panel2.Controls.Add(this.pnlMixDouble);
+            this.panel2.Controls.Add(this.pnlSingle);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(68, 3);
             this.panel2.Name = "panel2";
@@ -326,6 +327,7 @@
             this.pbxMDPlayer4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbxMDPlayer4.TabIndex = 39;
             this.pbxMDPlayer4.TabStop = false;
+            this.pbxMDPlayer4.Click += new System.EventHandler(this.pbxMDPlayer4_Click);
             // 
             // lblMDPlayer2
             // 
@@ -349,6 +351,7 @@
             this.pbxMDPlayer2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbxMDPlayer2.TabIndex = 37;
             this.pbxMDPlayer2.TabStop = false;
+            this.pbxMDPlayer2.Click += new System.EventHandler(this.pbxMDPlayer2_Click);
             // 
             // lblMDPlayer3
             // 
@@ -384,6 +387,7 @@
             this.pbxMDPlayer1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbxMDPlayer1.TabIndex = 31;
             this.pbxMDPlayer1.TabStop = false;
+            this.pbxMDPlayer1.Click += new System.EventHandler(this.pbxMDPlayer1_Click);
             // 
             // pbxMDPlayer3
             // 
@@ -395,6 +399,7 @@
             this.pbxMDPlayer3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbxMDPlayer3.TabIndex = 30;
             this.pbxMDPlayer3.TabStop = false;
+            this.pbxMDPlayer3.Click += new System.EventHandler(this.pbxMDPlayer3_Click);
             // 
             // lblMDMatchType
             // 
@@ -500,7 +505,7 @@
             this.lblSMatchType.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblSMatchType.AutoSize = true;
             this.lblSMatchType.Font = new System.Drawing.Font("Segoe UI Semibold", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSMatchType.Location = new System.Drawing.Point(497, 337);
+            this.lblSMatchType.Location = new System.Drawing.Point(478, 337);
             this.lblSMatchType.Name = "lblSMatchType";
             this.lblSMatchType.Size = new System.Drawing.Size(160, 37);
             this.lblSMatchType.TabIndex = 29;
@@ -508,19 +513,23 @@
             // 
             // tableLayoutPanel42
             // 
-            this.tableLayoutPanel42.ColumnCount = 5;
-            this.tableLayoutPanel42.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 373F));
-            this.tableLayoutPanel42.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 171F));
-            this.tableLayoutPanel42.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 176F));
-            this.tableLayoutPanel42.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 168F));
-            this.tableLayoutPanel42.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel42.ColumnCount = 7;
+            this.tableLayoutPanel42.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 69F));
+            this.tableLayoutPanel42.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 129F));
+            this.tableLayoutPanel42.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 214F));
+            this.tableLayoutPanel42.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 403F));
+            this.tableLayoutPanel42.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 239F));
+            this.tableLayoutPanel42.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 143F));
+            this.tableLayoutPanel42.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel42.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel42.Controls.Add(this.btnChangeCourt, 1, 0);
-            this.tableLayoutPanel42.Controls.Add(this.btnFinishGame, 3, 0);
+            this.tableLayoutPanel42.Controls.Add(this.btnFinishGame, 5, 0);
+            this.tableLayoutPanel42.Controls.Add(this.cbxAttackType, 3, 0);
             this.tableLayoutPanel42.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel42.Location = new System.Drawing.Point(3, 562);
             this.tableLayoutPanel42.Name = "tableLayoutPanel42";
             this.tableLayoutPanel42.RowCount = 1;
-            this.tableLayoutPanel42.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel42.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel42.Size = new System.Drawing.Size(1270, 61);
             this.tableLayoutPanel42.TabIndex = 2;
             // 
@@ -528,23 +537,41 @@
             // 
             this.btnChangeCourt.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnChangeCourt.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChangeCourt.Location = new System.Drawing.Point(396, 11);
+            this.btnChangeCourt.Location = new System.Drawing.Point(72, 11);
             this.btnChangeCourt.Name = "btnChangeCourt";
-            this.btnChangeCourt.Size = new System.Drawing.Size(125, 38);
+            this.btnChangeCourt.Size = new System.Drawing.Size(123, 38);
             this.btnChangeCourt.TabIndex = 42;
             this.btnChangeCourt.Text = "Change Court";
             this.btnChangeCourt.UseVisualStyleBackColor = true;
+            this.btnChangeCourt.Click += new System.EventHandler(this.btnChangeCourt_Click);
             // 
             // btnFinishGame
             // 
             this.btnFinishGame.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnFinishGame.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFinishGame.Location = new System.Drawing.Point(741, 11);
+            this.btnFinishGame.Location = new System.Drawing.Point(1063, 11);
             this.btnFinishGame.Name = "btnFinishGame";
             this.btnFinishGame.Size = new System.Drawing.Size(125, 38);
             this.btnFinishGame.TabIndex = 43;
             this.btnFinishGame.Text = "Finish Game";
             this.btnFinishGame.UseVisualStyleBackColor = true;
+            this.btnFinishGame.Click += new System.EventHandler(this.btnFinishGame_Click);
+            // 
+            // cbxAttackType
+            // 
+            this.cbxAttackType.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.cbxAttackType.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.cbxAttackType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxAttackType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbxAttackType.FormattingEnabled = true;
+            this.cbxAttackType.Items.AddRange(new object[] {
+            "Service Ace",
+            "Drop Shot",
+            "Smash Shot"});
+            this.cbxAttackType.Location = new System.Drawing.Point(471, 18);
+            this.cbxAttackType.Name = "cbxAttackType";
+            this.cbxAttackType.Size = new System.Drawing.Size(285, 25);
+            this.cbxAttackType.TabIndex = 45;
             // 
             // frmPlaybyPlay
             // 
@@ -624,5 +651,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel42;
         private System.Windows.Forms.Button btnChangeCourt;
         private System.Windows.Forms.Button btnFinishGame;
+        private System.Windows.Forms.ComboBox cbxAttackType;
     }
 }

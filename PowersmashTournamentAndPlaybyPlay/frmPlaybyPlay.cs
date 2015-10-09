@@ -21,7 +21,6 @@ namespace PowersmashTournamentAndPlaybyPlay
         private Rectangle rect;
         private Image shuttle;
         private int player_id1, player_id2, player_id3, player_id4, matchtype, server, t1Score = 0, t2Score = 0, play_id = 0;
-
         private string tournamentname, team1, team2, player_name1, player_name2, player_name3, player_name4;
 
         public frmPlaybyPlay(string tourname, string t1, string t2, string pn1, string pn2, string pn3, string pn4, int mt, int pi1, int pi2, int pi3, int pi4)
@@ -68,65 +67,100 @@ namespace PowersmashTournamentAndPlaybyPlay
             if (matchtype == 2 || matchtype == 3)
             {
                 byte[] image = null;
-                MessageBox.Show(player_id1.ToString() + "\n" + player_id2.ToString());
+                int rowcount = 0;
                 foreach (DataRow row in user_data.Rows)
                 {
                     if (player_id1 == row.Field<int>(0))
                     {
-                        image = (byte[])(row.Field<byte[]>(42));
-                        MemoryStream memstream = new MemoryStream(image);
-                        pbxMDPlayer1.Image = Image.FromStream(memstream);
-                        lblMDPlayer1.Text = player_name1;
+                        if (user_data.Rows[rowcount][42].ToString().Equals("")) { lblMDPlayer1.Text = player_name1; }
+                        else
+                        {
+                            image = (byte[])(row.Field<byte[]>(42));
+                            MemoryStream memstream = new MemoryStream(image);
+                            pbxMDPlayer1.Image = Image.FromStream(memstream);
+                            lblMDPlayer1.Text = player_name1;
+                        }
                     }
                     if (player_id2 == row.Field<int>(0))
                     {
-                        image = (byte[])(row.Field<byte[]>(42));
-                        MemoryStream memstream = new MemoryStream(image);
-                        pbxMDPlayer2.Image = Image.FromStream(memstream);
-                        lblMDPlayer2.Text = player_name2;
+                        if (user_data.Rows[rowcount][42].ToString().Equals("")) { lblMDPlayer2.Text = player_name1; }
+                        else
+                        {
+                            image = (byte[])(row.Field<byte[]>(42));
+                            MemoryStream memstream = new MemoryStream(image);
+                            pbxMDPlayer2.Image = Image.FromStream(memstream);
+                            lblMDPlayer2.Text = player_name2;
+                        }
                     }
                     if (player_id3 == row.Field<int>(0))
                     {
-                        image = (byte[])(row.Field<byte[]>(42));
-                        MemoryStream memstream = new MemoryStream(image);
-                        pbxMDPlayer3.Image = Image.FromStream(memstream);
-                        lblMDPlayer3.Text = player_name3;
+                        if (user_data.Rows[rowcount][42].ToString().Equals("")) { lblMDPlayer3.Text = player_name1; }
+                        else
+                        {
+                            image = (byte[])(row.Field<byte[]>(42));
+                            MemoryStream memstream = new MemoryStream(image);
+                            pbxMDPlayer3.Image = Image.FromStream(memstream);
+                            lblMDPlayer3.Text = player_name3;
+                        }
                     }
                     if (player_id4 == row.Field<int>(0))
                     {
-                        image = (byte[])(row.Field<byte[]>(42));
-                        MemoryStream memstream = new MemoryStream(image);
-                        pbxMDPlayer4.Image = Image.FromStream(memstream);
-                        lblMDPlayer4.Text = player_name4;
+                        if (user_data.Rows[rowcount][42].ToString().Equals("")) { lblMDPlayer4.Text = player_name1; }
+                        else
+                        {
+                            image = (byte[])(row.Field<byte[]>(42));
+                            MemoryStream memstream = new MemoryStream(image);
+                            pbxMDPlayer4.Image = Image.FromStream(memstream);
+                            lblMDPlayer4.Text = player_name4;
+                        }
                     }
+                    rowcount++;
                 }
                 lblTeam1.Text = team1;
                 lblTeam2.Text = team2;
                 pnlMixDouble.Show();
                 pnlSingle.Hide();
+                pbxMDPlayer1.Click += new EventHandler(pbxMDPlayer1_Click);
             }
             else if (matchtype == 1)
             {
                 byte[] image = null;
-                MessageBox.Show(player_id1.ToString() + "\n" + player_id2.ToString());
+                int rowcount = 0;
                 foreach (DataRow row in user_data.Rows)
                 {
                     if (player_id1 == row.Field<int>(0))
                     {
-                        image = (byte[])(row.Field<byte[]>(42));
-                        MemoryStream memstream = new MemoryStream(image);
-                        pbxSPlayer1.Image = Image.FromStream(memstream);
-                        lblSPlayer1.Text = player_name1;
-                        lblTeam1.Text = team1;
+                        if (user_data.Rows[rowcount][42].ToString().Equals(""))
+                        {
+                            lblSPlayer1.Text = player_name1;
+                            lblTeam1.Text = team1;
+                        }
+                        else
+                        {
+                            image = (byte[])(row.Field<byte[]>(42));
+                            MemoryStream memstream = new MemoryStream(image);
+                            pbxSPlayer1.Image = Image.FromStream(memstream);
+                            lblSPlayer1.Text = player_name1;
+                            lblTeam1.Text = team1;
+                        }
                     }
                     if (player_id2 == row.Field<int>(0))
                     {
-                        image = (byte[])(row.Field<byte[]>(42));
-                        MemoryStream memstream = new MemoryStream(image);
-                        pbxSPlayer2.Image = Image.FromStream(memstream);
-                        lblSPlayer2.Text = player_name2;
-                        lblTeam2.Text = team2;
+                        if (user_data.Rows[rowcount][42].ToString().Equals(""))
+                        {
+                            lblSPlayer2.Text = player_name2;
+                            lblTeam2.Text = team1;
+                        }
+                        else
+                        {
+                            image = (byte[])(row.Field<byte[]>(42));
+                            MemoryStream memstream = new MemoryStream(image);
+                            pbxSPlayer2.Image = Image.FromStream(memstream);
+                            lblSPlayer2.Text = player_name2;
+                            lblTeam2.Text = team2;
+                        }
                     }
+                    rowcount++;
                 }
                 pnlSingle.Show();
                 pnlMixDouble.Hide();
@@ -200,6 +234,7 @@ namespace PowersmashTournamentAndPlaybyPlay
 
         private void pbxSCourt_MouseClick(object sender, MouseEventArgs e)
         {
+            MessageBox.Show(e.X + "\n" + e.Y);
             rect = new Rectangle(e.X, e.Y, 20, 20);
             pbxSCourt.Invalidate();
             if (e.X >= 69 && e.X <= 327)
@@ -210,12 +245,13 @@ namespace PowersmashTournamentAndPlaybyPlay
                     lblScore2.Text = t2Score.ToString("00");
                     foreach (DataRow row in match_data.Rows)
                     {
-                        if (row.Field<int>(2) == player_id1 && row.Field<int>(3) == player_id2)
+                        if (row.Field<int>(2) == player_id1 && row.Field<int>(4) == player_id2)
                         {
                             play_id++;
-                            string query = "INSERT INTO powersmash.playbyplay (match_id, server, play_id, x_axis, y_axis, score_1, score_2)" +
-                                           "VALUES ((SELECT id FROM powersmash.match WHERE player_1_1 = '" + player_id1 + "' AND player_1_2 = '" + player_id2 + "'),'" + server + "', '" + play_id + "', '" +
-                                           e.X.ToString() + "', '" + e.Y.ToString() + "', '" + t1Score + "', '" + t2Score + "')";
+                            MessageBox.Show(player_id1.ToString() + "\n" + player_id2.ToString());
+                            string query = "INSERT INTO powersmash.playbyplay (match_id, server, play_id, x_axis, y_axis, score_1, score_2, attack_type)" +
+                                           "VALUES ((SELECT id FROM powersmash.match WHERE player11 = '" + player_id1 + "' AND player21 = '" + player_id2 + "'),'" + server + "', '" + play_id + "', '" +
+                                           e.X.ToString() + "', '" + e.Y.ToString() + "', '" + t1Score + "', '" + t2Score + "','" + cbxAttackType.Text + "')";
                             saveData(query);
                         }
                     }
@@ -229,12 +265,12 @@ namespace PowersmashTournamentAndPlaybyPlay
                     lblScore1.Text = t1Score.ToString("00");
                     foreach (DataRow row in match_data.Rows)
                     {
-                        if (row.Field<int>(2) == player_id1 && row.Field<int>(3) == player_id2)
+                        if (row.Field<int>(2) == player_id1 && row.Field<int>(4) == player_id2)
                         {
                             play_id++;
-                            string query = "INSERT INTO powersmash.playbyplay (match_id, server, play_id, x_axis, y_axis, score_1, score_2)" +
-                                           "VALUES ((SELECT id FROM powersmash.match WHERE player_1_1 = '" + player_id1 + "' AND player_1_2 = '" + player_id2 + "'),'" + server + "', '" + play_id + "', '" +
-                                           e.X.ToString() + "', '" + e.Y.ToString() + "', '" + t1Score + "', '" + t2Score + "')";
+                            string query = "INSERT INTO powersmash.playbyplay (match_id, server, play_id, x_axis, y_axis, score_1, score_2, attack_type)" +
+                                           "VALUES ((SELECT id FROM powersmash.match WHERE player11 = '" + player_id1 + "' AND player21 = '" + player_id2 + "'),'" + server + "', '" + play_id + "', '" +
+                                           e.X.ToString() + "', '" + e.Y.ToString() + "', '" + t1Score + "', '" + t2Score + "','" + cbxAttackType.Text + "')";
                             saveData(query);
                         }
                     }
@@ -272,16 +308,22 @@ namespace PowersmashTournamentAndPlaybyPlay
                 {
                     t2Score++;
                     lblScore2.Text = t2Score.ToString("00");
+                    int rowcount = 0;
                     foreach (DataRow row in match_data.Rows)
                     {
-                        if (row.Field<int>(2) == player_id1 && row.Field<int>(3) == player_id2)
+                        int p1 = int.Parse(match_data.Rows[rowcount][2].ToString());
+                        int p2 = int.Parse(match_data.Rows[rowcount][3].ToString());
+                        int p3 = int.Parse(match_data.Rows[rowcount][4].ToString());
+                        int p4 = int.Parse(match_data.Rows[rowcount][5].ToString());
+                        if (p1 == player_id1 && p2 == player_id2 && p3 == player_id3 && p4 == player_id4)
                         {
                             play_id++;
-                            string query = "INSERT INTO powersmash.playbyplay (match_id, server, play_id, x_axis, y_axis, score_1, score_2)" +
-                                           "VALUES ((SELECT id FROM powersmash.match WHERE player_1_1 = '" + player_id1 + "' AND player_1_2 = '" + player_id2 + "' AND player_2_1 = '" + player_id3 +
-                                           "' AND player_2_2 = '" + player_id4 + "'),'" + server + "', '" + play_id + "', '" + e.X.ToString() + "', '" + e.Y.ToString() + "', '" + t1Score + "', '" + t2Score + "')";
+                            string query = "INSERT INTO powersmash.playbyplay (match_id, server, play_id, x_axis, y_axis, score_1, score_2, attack_type)" +
+                                           "VALUES ((SELECT id FROM powersmash.match WHERE player11 = '" + player_id1 + "' AND player12 = '" + player_id2 + "' AND player21 = '" + player_id3 +
+                                           "' AND player22 = '" + player_id4 + "'),'" + server + "', '" + play_id + "', '" + e.X.ToString() + "', '" + e.Y.ToString() + "', '" + t1Score + "', '" + t2Score + "','" + cbxAttackType.Text + "')";
                             saveData(query);
                         }
+                        rowcount++;
                     }
                 }
             }
@@ -291,19 +333,124 @@ namespace PowersmashTournamentAndPlaybyPlay
                 {
                     t1Score++;
                     lblScore1.Text = t1Score.ToString("00");
+                    int rowcount = 0;
                     foreach (DataRow row in match_data.Rows)
                     {
-                        if (row.Field<int>(2) == player_id1 && row.Field<int>(3) == player_id2)
+                        int p1 = int.Parse(match_data.Rows[rowcount][2].ToString());
+                        int p2 = int.Parse(match_data.Rows[rowcount][3].ToString());
+                        int p3 = int.Parse(match_data.Rows[rowcount][4].ToString());
+                        int p4 = int.Parse(match_data.Rows[rowcount][5].ToString());
+                        if (p1 == player_id1 && p2 == player_id2 && p3 == player_id3 && p4 == player_id4)
                         {
                             play_id++;
-                            string query = "INSERT INTO powersmash.playbyplay (match_id, server, play_id, x_axis, y_axis, score_1, score_2)" +
-                                           "VALUES ((SELECT id FROM powersmash.match WHERE player_1_1 = '" + player_id1 + "' AND player_1_2 = '" + player_id2 + "' AND player_2_1 = '" + player_id3 +
-                                           "' AND player_2_2 = '" + player_id4 + "'),'" + server + "', '" + play_id + "','" + e.X.ToString() + "', '" + e.Y.ToString() + "', '" + t1Score + "', '" + t2Score + "')";
+                            string query = "INSERT INTO powersmash.playbyplay (match_id, server, play_id, x_axis, y_axis, score_1, score_2, attack_type)" +
+                                           "VALUES ((SELECT id FROM powersmash.match WHERE player11 = '" + player_id1 + "' AND player12 = '" + player_id2 + "' AND player21 = '" + player_id3 +
+                                           "' AND player22 = '" + player_id4 + "'),'" + server + "', '" + play_id + "','" + e.X.ToString() + "', '" + e.Y.ToString() + "', '" + t1Score + "', '" + t2Score + "','" + cbxAttackType.Text + "')";
                             saveData(query);
                         }
+                        rowcount++;
                     }
                 }
             }
+        }
+
+        private void pbxMDPlayer1_Click(object sender, EventArgs e)
+        {
+            pbxMDPlayer1.BorderStyle = BorderStyle.FixedSingle;
+            pbxMDPlayer2.BorderStyle = BorderStyle.None;
+            pbxMDPlayer3.BorderStyle = BorderStyle.None;
+            pbxMDPlayer4.BorderStyle = BorderStyle.None;
+            server = player_id1;
+        }
+
+        private void pbxMDPlayer2_Click(object sender, EventArgs e)
+        {
+            pbxMDPlayer2.BorderStyle = BorderStyle.FixedSingle;
+            pbxMDPlayer1.BorderStyle = BorderStyle.None;
+            pbxMDPlayer3.BorderStyle = BorderStyle.None;
+            pbxMDPlayer4.BorderStyle = BorderStyle.None;
+            server = player_id2;
+        }
+
+        private void pbxMDPlayer3_Click(object sender, EventArgs e)
+        {
+            pbxMDPlayer3.BorderStyle = BorderStyle.FixedSingle;
+            pbxMDPlayer2.BorderStyle = BorderStyle.None;
+            pbxMDPlayer1.BorderStyle = BorderStyle.None;
+            pbxMDPlayer4.BorderStyle = BorderStyle.None;
+            server = player_id3;
+        }
+
+        private void pbxMDPlayer4_Click(object sender, EventArgs e)
+        {
+            pbxMDPlayer4.BorderStyle = BorderStyle.FixedSingle;
+            pbxMDPlayer2.BorderStyle = BorderStyle.None;
+            pbxMDPlayer3.BorderStyle = BorderStyle.None;
+            pbxMDPlayer1.BorderStyle = BorderStyle.None;
+            server = player_id4;
+        }
+
+        private void btnChangeCourt_Click(object sender, EventArgs e)
+        {
+            int temp_playerid1, temp_playerid2;
+            string temp_string, temp_player1, temp_player2;
+            PictureBox pic1 = new PictureBox();
+            PictureBox pic2 = new PictureBox();
+            if (matchtype == 2 || matchtype == 3)
+            {
+                temp_string = team1;
+                team1 = team2;
+                team2 = temp_string;
+                temp_player1 = player_name1;
+                temp_player2 = player_name2;
+                player_name1 = player_name3;
+                player_name2 = player_name4;
+                player_name3 = temp_player1;
+                player_name4 = temp_player2;
+                temp_playerid1 = player_id1;
+                temp_playerid2 = player_id2;
+                player_id1 = player_id3;
+                player_id2 = player_id4;
+                player_id3 = temp_playerid1;
+                player_id4 = temp_playerid2;
+                pic1.Image = pbxMDPlayer1.Image;
+                pic2.Image = pbxMDPlayer2.Image;
+                pbxMDPlayer1.Image = pbxMDPlayer3.Image;
+                pbxMDPlayer2.Image = pbxMDPlayer4.Image;
+                pbxMDPlayer3.Image = pic1.Image;
+                pbxMDPlayer4.Image = pic2.Image;
+                temp_player1 = lblMDPlayer1.Text;
+                temp_player2 = lblMDPlayer2.Text;
+                lblMDPlayer1.Text = lblMDPlayer2.Text;
+                lblMDPlayer2.Text = lblMDPlayer3.Text;
+                lblMDPlayer3.Text = temp_player1;
+                lblMDPlayer4.Text = temp_player2;
+            }
+            else if (matchtype == 1)
+            {
+                temp_string = team1;
+                team1 = team2;
+                team2 = temp_string;
+                temp_string = player_name1;
+                player_name1 = player_name2;
+                player_name2 = temp_string;
+                temp_playerid1 = player_id1;
+                player_id1 = player_id2;
+                player_id2 = temp_playerid1;
+                pic1.Image = pbxSPlayer1.Image;
+                pbxSPlayer1.Image = pbxSPlayer2.Image;
+                pbxSPlayer2.Image = pic1.Image;
+                temp_player1 = lblSPlayer1.Text;
+                lblSPlayer1.Text = lblSPlayer2.Text;
+                lblSPlayer2.Text = temp_player1;
+            }
+        }
+
+        private void btnFinishGame_Click(object sender, EventArgs e)
+        {
+            //update query to the match score;
+            //back to main form
+            //string query = "UPDATE powersmash.match "
         }
     }
 }
