@@ -41,9 +41,6 @@
             this.tableLayoutPanel43 = new System.Windows.Forms.TableLayoutPanel();
             this.label225 = new System.Windows.Forms.Label();
             this.cbxCourtTour = new System.Windows.Forms.ComboBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cbxGender = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.gbxMix = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel29 = new System.Windows.Forms.TableLayoutPanel();
@@ -131,7 +128,6 @@
             this.tableLayoutPanel11.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
             this.tableLayoutPanel43.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.gbxMix.SuspendLayout();
             this.tableLayoutPanel29.SuspendLayout();
@@ -222,7 +218,6 @@
             this.tableLayoutPanel10.Controls.Add(this.tableLayoutPanel11, 1, 0);
             this.tableLayoutPanel10.Controls.Add(this.tableLayoutPanel12, 1, 1);
             this.tableLayoutPanel10.Controls.Add(this.tableLayoutPanel43, 3, 0);
-            this.tableLayoutPanel10.Controls.Add(this.tableLayoutPanel1, 3, 1);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel10.Location = new System.Drawing.Point(84, 73);
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
@@ -356,50 +351,6 @@
             this.cbxCourtTour.Name = "cbxCourtTour";
             this.cbxCourtTour.Size = new System.Drawing.Size(251, 28);
             this.cbxCourtTour.TabIndex = 1;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 69F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.cbxGender, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(774, 39);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(326, 33);
-            this.tableLayoutPanel1.TabIndex = 3;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 33);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Gender:";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // cbxGender
-            // 
-            this.cbxGender.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.cbxGender.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbxGender.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxGender.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbxGender.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbxGender.FormattingEnabled = true;
-            this.cbxGender.Items.AddRange(new object[] {
-            "Male",
-            "Female"});
-            this.cbxGender.Location = new System.Drawing.Point(72, 3);
-            this.cbxGender.Name = "cbxGender";
-            this.cbxGender.Size = new System.Drawing.Size(251, 28);
-            this.cbxGender.TabIndex = 1;
-            this.cbxGender.SelectedIndexChanged += new System.EventHandler(this.cbxGender_SelectedIndexChanged);
             // 
             // panel1
             // 
@@ -1506,6 +1457,7 @@
             this.Name = "frmMain";
             this.Text = "Powersmash Online Reservation with PLay-by-Play System";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.Shown += new System.EventHandler(this.frmMain_Shown);
             this.tableLayoutPanel9.ResumeLayout(false);
@@ -1517,8 +1469,6 @@
             this.tableLayoutPanel12.PerformLayout();
             this.tableLayoutPanel43.ResumeLayout(false);
             this.tableLayoutPanel43.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.gbxMix.ResumeLayout(false);
             this.tableLayoutPanel29.ResumeLayout(false);
@@ -1636,9 +1586,6 @@
         private System.Windows.Forms.Panel pnlDoublePlayer4;
         private System.Windows.Forms.PictureBox pbxDoublePlayer4;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cbxGender;
         private System.Windows.Forms.ComboBox cbxTournamentName;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
         private System.Windows.Forms.Label label23;

@@ -69,7 +69,6 @@ namespace PowersmashTournamentAndPlaybyPlay
                 cbxCourtTour.SelectedIndex = 0;
             }
             cbxMatchType.SelectedIndex = 0;
-            cbxGender.SelectedIndex = 0;
             cbxSingleTeam1.SelectedIndex = 0;
             cbxSingleTeam2.SelectedIndex = 0;
             cbxDoubleTeam1.SelectedIndex = 0;
@@ -219,40 +218,6 @@ namespace PowersmashTournamentAndPlaybyPlay
                 gbxSingle.Hide();
                 gbxDouble.Hide();
             }
-        }
-
-        private void cbxGender_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            /*for (int i = 0; i < dgvSinglePlayer.RowCount; i++)
-            {
-                dgvSinglePlayer.Rows[i].Visible = true ;
-            }
-            dgvSinglePlayer.Invalidate();
-
-            if (cbxMatchType.SelectedIndex == 0)
-            {
-                for (int i = 0; i < dgvSinglePlayer.RowCount; i++)
-                {
-                    if (cbxGender.SelectedIndex == 0)
-                    {
-                        if (!dgvSinglePlayer.Rows[i].Cells["gender"].Value.ToString().Equals("m"))
-                        {
-                            dgvSinglePlayer.CurrentCell = null;
-                            dgvSinglePlayer.Rows[i].Visible = false;
-                            dgvSinglePlayer.Invalidate();
-                        }
-                    }
-                    if (cbxGender.SelectedIndex == 1)
-                    {
-                        if (!dgvSinglePlayer.Rows[i].Cells["gender"].Value.ToString().Equals("f"))
-                        {
-                            dgvSinglePlayer.CurrentCell = null;
-                            dgvSinglePlayer.Rows[i].Visible = false;
-                            dgvSinglePlayer.Invalidate();
-                        }
-                    }
-                }
-            }*/
         }
 
         private void cbxMixTeam1_SelectedIndexChanged(object sender, EventArgs e)
@@ -475,16 +440,30 @@ namespace PowersmashTournamentAndPlaybyPlay
 
         private void btnMixDone_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you done?", "Done", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (cbxMixTeam1.Text.Equals(cbxMixTeam2.Text))
             {
-                string matchgame = "INSERT INTO powersmash.match (player11, player12, player21, player22, tournament_id, court_id, type) VALUES((SELECT id FROM powersmash.user WHERE id = '" + mp1 +
-                                   "'), (SELECT id FROM powersmash.user WHERE id = '" + mp2 + "'), (SELECT id FROM powersmash.user WHERE id = '" + mp3 + "'), (SELECT id FROM powersmash.user WHERE id = '" + mp4 +
-                                   "'), (SELECT id FROM powersmash.tournament WHERE name = '" + cbxTournamentName.Text + "'), '" + cbxCourtTour.Text + "', 'Mixed')";
-                saveData(matchgame);
+                MessageBox.Show("Team are the same, Please Select different team");
+            }
+            else
+            {
+                if (cbxPlayerMixName1.Text.Equals(cbxPlayerMixName2.Text) || cbxPlayerMixName3.Text.Equals(cbxPlayerMixName4.Text))
+                {
+                    MessageBox.Show("Player is already selecte");
+                }
+                else
+                {
+                    if (MessageBox.Show("Are you done?", "Done", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        string matchgame = "INSERT INTO powersmash.match (player11, player12, player21, player22, tournament_id, court_id, type) VALUES((SELECT id FROM powersmash.user WHERE id = '" + mp1 +
+                                           "'), (SELECT id FROM powersmash.user WHERE id = '" + mp2 + "'), (SELECT id FROM powersmash.user WHERE id = '" + mp3 + "'), (SELECT id FROM powersmash.user WHERE id = '" + mp4 +
+                                           "'), (SELECT id FROM powersmash.tournament WHERE name = '" + cbxTournamentName.Text + "'), '" + cbxCourtTour.Text + "', 'Mixed')";
+                        saveData(matchgame);
 
-                frmPlaybyPlay play = new frmPlaybyPlay(cbxTournamentName.Text, cbxMixTeam1.Text, cbxMixTeam2.Text, cbxPlayerMixName1.Text, cbxPlayerMixName2.Text, cbxPlayerMixName3.Text, cbxPlayerMixName4.Text, 3, mp1, mp2, mp3, mp4);
-                play.Show();
-                this.Hide();
+                        frmPlaybyPlay play = new frmPlaybyPlay(cbxTournamentName.Text, cbxMixTeam1.Text, cbxMixTeam2.Text, cbxPlayerMixName1.Text, cbxPlayerMixName2.Text, cbxPlayerMixName3.Text, cbxPlayerMixName4.Text, 3, mp1, mp2, mp3, mp4);
+                        play.Show();
+                        this.Hide();
+                    }
+                }
             }
         }
 
@@ -631,6 +610,11 @@ namespace PowersmashTournamentAndPlaybyPlay
             }
         }
 
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Dispose();
+        }
+
         private void cbxDoublePlayerName2_SelectedIndexChanged(object sender, EventArgs e)
         {
             byte[] image;
@@ -708,16 +692,30 @@ namespace PowersmashTournamentAndPlaybyPlay
 
         private void btnDoubleDone_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you done?", "Done", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (cbxDoubleTeam1.Text.Equals(cbxDoubleTeam2.Text))
             {
-                string matchgame = "INSERT INTO powersmash.match (player11, player12, player21, player22, tournament_id, court_id, type) VALUES((SELECT id FROM powersmash.user WHERE id = '" + dp1 +
-                                   "'), (SELECT id FROM powersmash.user WHERE id = '" + dp2 + "'), (SELECT id FROM powersmash.user WHERE id = '" + dp3 + "'), (SELECT id FROM powersmash.user WHERE id = '" + dp4 + 
-                                   "'), (SELECT id FROM powersmash.tournament WHERE name = '" + cbxTournamentName.Text + "'), '" + cbxCourtTour.Text + "', 'Doubles')";
-                saveData(matchgame);
+                MessageBox.Show("Team are the same, Please Select different team");
+            }
+            else
+            {
+                if (cbxPlayerDoubleName1.Text.Equals(cbxPlayerDoubleName2.Text) || cbxPlayerDoubleName3.Text.Equals(cbxPlayerDoubleName4.Text))
+                {
+                    MessageBox.Show("Player is already selecte");
+                }
+                else
+                {
+                    if (MessageBox.Show("Are you done?", "Done", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        string matchgame = "INSERT INTO powersmash.match (player11, player12, player21, player22, tournament_id, court_id, type) VALUES((SELECT id FROM powersmash.user WHERE id = '" + dp1 +
+                                           "'), (SELECT id FROM powersmash.user WHERE id = '" + dp2 + "'), (SELECT id FROM powersmash.user WHERE id = '" + dp3 + "'), (SELECT id FROM powersmash.user WHERE id = '" + dp4 +
+                                           "'), (SELECT id FROM powersmash.tournament WHERE name = '" + cbxTournamentName.Text + "'), '" + cbxCourtTour.Text + "', 'Doubles')";
+                        saveData(matchgame);
 
-                frmPlaybyPlay play = new frmPlaybyPlay(cbxTournamentName.Text, cbxDoubleTeam1.Text, cbxDoubleTeam2.Text, cbxPlayerDoubleName1.Text, cbxPlayerDoubleName2.Text, cbxPlayerDoubleName3.Text, cbxPlayerDoubleName4.Text, 2, dp1, dp2, dp3, dp4);
-                play.Show();
-                this.Hide();
+                        frmPlaybyPlay play = new frmPlaybyPlay(cbxTournamentName.Text, cbxDoubleTeam1.Text, cbxDoubleTeam2.Text, cbxPlayerDoubleName1.Text, cbxPlayerDoubleName2.Text, cbxPlayerDoubleName3.Text, cbxPlayerDoubleName4.Text, 2, dp1, dp2, dp3, dp4);
+                        play.Show();
+                        this.Hide();
+                    }
+                }
             }
         }
 
@@ -877,17 +875,30 @@ namespace PowersmashTournamentAndPlaybyPlay
 
         private void btnSingleDone_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you done?", "Done", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (cbxSingleTeam1.Text.Equals(cbxSingleTeam2.Text))
             {
-                MessageBox.Show(sp1.ToString() + "\n" + sp2.ToString());
-                string matchgame = "INSERT INTO powersmash.match (player11, player21, tournament_id, court_id, type) VALUES((SELECT id FROM powersmash.user WHERE id = '" + sp1 +
-                                   "'), (SELECT id FROM powersmash.user WHERE id = '" + sp2 + "'), (SELECT id FROM powersmash.tournament WHERE name = '" + cbxTournamentName.Text +
-                                   "'), '" + cbxCourtTour.Text + "', 'Singles')";
-                saveData(matchgame);
+                MessageBox.Show("Team are the same, Please Select different team");
+            }
+            else
+            {
+                if (cbxPlayerSingleName1.Text.Equals(cbxPlayerSingleName2.Text))
+                {
+                    MessageBox.Show("Player is already selecte");
+                }
+                else
+                {
+                    if (MessageBox.Show("Are you done?", "Done", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        string matchgame = "INSERT INTO powersmash.match (player11, player21, tournament_id, court_id, type) VALUES((SELECT id FROM powersmash.user WHERE id = '" + sp1 +
+                                           "'), (SELECT id FROM powersmash.user WHERE id = '" + sp2 + "'), (SELECT id FROM powersmash.tournament WHERE name = '" + cbxTournamentName.Text +
+                                           "'), '" + cbxCourtTour.Text + "', 'Singles')";
+                        saveData(matchgame);
 
-                frmPlaybyPlay play = new frmPlaybyPlay(cbxTournamentName.Text, cbxSingleTeam1.Text, cbxSingleTeam2.Text, cbxPlayerSingleName1.Text, cbxPlayerSingleName2.Text, "", "", 1, sp1, sp2, 0, 0);
-                play.Show();
-                this.Hide();
+                        frmPlaybyPlay play = new frmPlaybyPlay(cbxTournamentName.Text, cbxSingleTeam1.Text, cbxSingleTeam2.Text, cbxPlayerSingleName1.Text, cbxPlayerSingleName2.Text, "", "", 1, sp1, sp2, 0, 0);
+                        play.Show();
+                        this.Hide();
+                    }
+                }
             }
         }
     }

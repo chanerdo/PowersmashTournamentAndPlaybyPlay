@@ -20,7 +20,7 @@ namespace PowersmashTournamentAndPlaybyPlay
         private DataTable match_data;
         private Rectangle rect;
         private Image shuttle;
-        private int player_id1, player_id2, player_id3, player_id4, matchtype, server, t1Score = 0, t2Score = 0, play_id = 0, team1_counter, team2_counter;
+        private int player_id1, player_id2, player_id3, player_id4, matchtype, server, t1Score = 0, t2Score = 0, play_id = 0, team1_counter = 0, team2_counter = 0;
         private string tournamentname, team1, team2, player_name1, player_name2, player_name3, player_name4;
 
         public frmPlaybyPlay(string tourname, string t1, string t2, string pn1, string pn2, string pn3, string pn4, int mt, int pi1, int pi2, int pi3, int pi4)
@@ -164,6 +164,7 @@ namespace PowersmashTournamentAndPlaybyPlay
                 pnlMixDouble.Hide();
                 pbxSPlayer1.Click += new EventHandler(pbxSPlayer1_Click);
             }
+            cbxAttackType.SelectedIndex = 0;
         }
 
         private void getUserData()
@@ -232,7 +233,6 @@ namespace PowersmashTournamentAndPlaybyPlay
 
         private void pbxSCourt_MouseClick(object sender, MouseEventArgs e)
         {
-            MessageBox.Show(e.X + "\n" + e.Y);
             rect = new Rectangle(e.X, e.Y, 20, 20);
             pbxSCourt.Invalidate();
             if (e.X >= 69 && e.X <= 327)
@@ -246,7 +246,6 @@ namespace PowersmashTournamentAndPlaybyPlay
                         if (row.Field<int>(2) == player_id1 && row.Field<int>(4) == player_id2)
                         {
                             play_id++;
-                            MessageBox.Show(player_id1.ToString() + "\n" + player_id2.ToString());
                             string query = "INSERT INTO powersmash.playbyplay (match_id, server, play_id, x_axis, y_axis, score_1, score_2, attack_type)" +
                                            "VALUES ((SELECT id FROM powersmash.match WHERE player11 = '" + player_id1 + "' AND player21 = '" + player_id2 + "'),'" + server + "', '" + play_id + "', '" +
                                            e.X.ToString() + "', '" + e.Y.ToString() + "', '" + t1Score + "', '" + t2Score + "','" + cbxAttackType.Text + "')";
@@ -310,10 +309,8 @@ namespace PowersmashTournamentAndPlaybyPlay
                     foreach (DataRow row in match_data.Rows)
                     {
                         int p1 = int.Parse(match_data.Rows[rowcount][2].ToString());
-                        int p2 = int.Parse(match_data.Rows[rowcount][3].ToString());
                         int p3 = int.Parse(match_data.Rows[rowcount][4].ToString());
-                        int p4 = int.Parse(match_data.Rows[rowcount][5].ToString());
-                        if (p1 == player_id1 && p2 == player_id2 && p3 == player_id3 && p4 == player_id4)
+                        if (p1 == player_id1 && p3 == player_id3)
                         {
                             play_id++;
                             string query = "INSERT INTO powersmash.playbyplay (match_id, server, play_id, x_axis, y_axis, score_1, score_2, attack_type)" +
@@ -335,10 +332,8 @@ namespace PowersmashTournamentAndPlaybyPlay
                     foreach (DataRow row in match_data.Rows)
                     {
                         int p1 = int.Parse(match_data.Rows[rowcount][2].ToString());
-                        int p2 = int.Parse(match_data.Rows[rowcount][3].ToString());
                         int p3 = int.Parse(match_data.Rows[rowcount][4].ToString());
-                        int p4 = int.Parse(match_data.Rows[rowcount][5].ToString());
-                        if (p1 == player_id1 && p2 == player_id2 && p3 == player_id3 && p4 == player_id4)
+                        if (p1 == player_id1 && p3 == player_id3)
                         {
                             play_id++;
                             string query = "INSERT INTO powersmash.playbyplay (match_id, server, play_id, x_axis, y_axis, score_1, score_2, attack_type)" +
@@ -425,6 +420,12 @@ namespace PowersmashTournamentAndPlaybyPlay
                 lblMDPlayer2.Text = lblMDPlayer3.Text;
                 lblMDPlayer3.Text = temp_player1;
                 lblMDPlayer4.Text = temp_player2;
+                lblTeam1.Text = team1;
+                lblTeam2.Text = team2;
+                t1Score = 0;
+                t2Score = 0;
+                lblScore1.Text = t1Score.ToString();
+                lblScore2.Text = t2Score.ToString();
             }
             else if (matchtype == 1)
             {
@@ -443,12 +444,17 @@ namespace PowersmashTournamentAndPlaybyPlay
                 temp_player1 = lblSPlayer1.Text;
                 lblSPlayer1.Text = lblSPlayer2.Text;
                 lblSPlayer2.Text = temp_player1;
+                lblTeam1.Text = team1;
+                lblTeam2.Text = team2;
+                t1Score = 0;
+                t2Score = 0;
+                lblScore1.Text = t1Score.ToString();
+                lblScore2.Text = t2Score.ToString();
             }
         }
 
         private void btnFinishGame_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(matchtype.ToString());
             if (matchtype == 1)
             {
                 string query = "UPDATE powersmash.match SET score_1 = '" + team1_counter.ToString() + "', score_2 = '" + team2_counter.ToString() + "' WHERE player11 = '" + player_id1.ToString() +
