@@ -42,7 +42,7 @@ namespace PowersmashTournamentAndPlaybyPlay
             }
             foreach (DataRow reserve_row in reservation_data.Rows)
             {
-                if (reserve_row.Field<int>(9) == 3)
+                if (reserve_row.Field<int>(8) == 3)
                 {
                     cbxCourtTour.Items.Add(reserve_row.Field<int>(2));
                 }

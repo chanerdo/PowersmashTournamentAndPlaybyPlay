@@ -20,7 +20,7 @@ namespace PowersmashTournamentAndPlaybyPlay
         private DataTable match_data;
         private Rectangle rect;
         private Image shuttle;
-        private int player_id1, player_id2, player_id3, player_id4, matchtype, server, t1Score = 0, t2Score = 0, play_id = 0;
+        private int player_id1, player_id2, player_id3, player_id4, matchtype, server, t1Score = 0, t2Score = 0, play_id = 0, team1_counter, team2_counter;
         private string tournamentname, team1, team2, player_name1, player_name2, player_name3, player_name4;
 
         public frmPlaybyPlay(string tourname, string t1, string t2, string pn1, string pn2, string pn3, string pn4, int mt, int pi1, int pi2, int pi3, int pi4)
@@ -133,7 +133,6 @@ namespace PowersmashTournamentAndPlaybyPlay
                         if (user_data.Rows[rowcount][42].ToString().Equals(""))
                         {
                             lblSPlayer1.Text = player_name1;
-                            lblTeam1.Text = team1;
                         }
                         else
                         {
@@ -141,7 +140,6 @@ namespace PowersmashTournamentAndPlaybyPlay
                             MemoryStream memstream = new MemoryStream(image);
                             pbxSPlayer1.Image = Image.FromStream(memstream);
                             lblSPlayer1.Text = player_name1;
-                            lblTeam1.Text = team1;
                         }
                     }
                     if (player_id2 == row.Field<int>(0))
@@ -149,7 +147,6 @@ namespace PowersmashTournamentAndPlaybyPlay
                         if (user_data.Rows[rowcount][42].ToString().Equals(""))
                         {
                             lblSPlayer2.Text = player_name2;
-                            lblTeam2.Text = team1;
                         }
                         else
                         {
@@ -157,11 +154,12 @@ namespace PowersmashTournamentAndPlaybyPlay
                             MemoryStream memstream = new MemoryStream(image);
                             pbxSPlayer2.Image = Image.FromStream(memstream);
                             lblSPlayer2.Text = player_name2;
-                            lblTeam2.Text = team2;
                         }
                     }
                     rowcount++;
                 }
+                lblTeam1.Text = team1;
+                lblTeam2.Text = team2;
                 pnlSingle.Show();
                 pnlMixDouble.Hide();
                 pbxSPlayer1.Click += new EventHandler(pbxSPlayer1_Click);
@@ -392,6 +390,8 @@ namespace PowersmashTournamentAndPlaybyPlay
 
         private void btnChangeCourt_Click(object sender, EventArgs e)
         {
+            if(t1Score > t2Score) { team1_counter++; }
+            if(t2Score > t1Score) { team2_counter++; }
             int temp_playerid1, temp_playerid2;
             string temp_string, temp_player1, temp_player2;
             PictureBox pic1 = new PictureBox();
@@ -448,9 +448,26 @@ namespace PowersmashTournamentAndPlaybyPlay
 
         private void btnFinishGame_Click(object sender, EventArgs e)
         {
+            MessageBox.Show(matchtype.ToString());
+            if (matchtype == 1)
+            {
+                string query = "UPDATE powersmash.match SET score_1 = '" + team1_counter.ToString() + "', score_2 = '" + team2_counter.ToString() + "' WHERE player11 = '" + player_id1.ToString() +
+                               "' AND player21 = '" + player_id2 + "'";
+                saveData(query);
+            }
+            if (matchtype == 2 || matchtype == 3)
+            {
+                string query = "UPDATE powersmash.match SET score_1 = '" + team1_counter.ToString() + "', score_2 = '" + team2_counter.ToString() + "' WHERE player11 = '" + player_id1.ToString() +
+                               "' AND player12 = '" + player_id2 + "' AND player21 = '" + player_id3 + "' AND player22 = '" + player_id4 + "'";
+                saveData(query);
+            }
             //update query to the match score;
             //back to main form
             //string query = "UPDATE powersmash.match "
+
+            frmMain main = new frmMain();
+            main.Show();
+            this.Dispose();
         }
     }
 }
